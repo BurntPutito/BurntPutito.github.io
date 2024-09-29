@@ -1,0 +1,54 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #242525;
+    color: #F2AA4CFF;
+}
+
+/* Header */
+header {
+    color: #F2AA4CFF;
+    text-align: center;
+    padding: px 0;
+}
+
+/* Navigation */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+    background-color: #F2AA4CFF;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #242525;
+    text-decoration: none;
+}
+
+/* Sections */
+section {
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 20px;
+    background-color: #323335;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.project {
+    margin-bottom: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #F2AA4CFF;
+    color: #242525;
+}
