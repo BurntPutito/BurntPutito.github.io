@@ -135,6 +135,55 @@
             z-index: 2;
         }
 
+        .logo-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem auto;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 4px solid var(--bg-secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-icon:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(250, 189, 47, 0.3);
+        }
+
+        .logo-icon i {
+            font-size: 3rem;
+            color: white;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: transform 0.6s ease;
+        }
+
+        .logo-icon:hover::before {
+            transform: rotate(45deg) translate(50%, 50%);
+        }
+
         .hero h1 {
             font-size: 4rem;
             font-weight: 700;
@@ -520,6 +569,9 @@
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-content" data-aos="fade-up">
+            <div class="logo-icon" data-aos="zoom-in" data-aos-delay="200">
+                <img src="images/BurntPutito.png">
+            </div>
             <h1>BurntPutito</h1>
             <p>A dedicated programmer focusing on creating and improving skills.</p>
             <a href="#projects" class="cta-button">View My Work</a>
@@ -913,11 +965,11 @@
             const heroSubtitle = document.querySelector('.hero p');
             
             setTimeout(() => {
-                typeWriter(heroTitle, 'Your Name', 150);
+                typeWriter(heroTitle, 'BurntPutito', 150);
             }, 500);
             
             setTimeout(() => {
-                typeWriter(heroSubtitle, 'Full Stack Developer & Creative Problem Solver', 50);
+                typeWriter(heroSubtitle, 'A dedicated programmer focusing on creating and improving skills.', 50);
             }, 2500);
         });
 
