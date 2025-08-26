@@ -22,17 +22,17 @@
         }
 
         :root {
-            --primary-color: #6366f1;
-            --secondary-color: #8b5cf6;
-            --accent-color: #06b6d4;
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-card: #334155;
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
-            --text-muted: #94a3b8;
+            --primary-color: #fabd2f;
+            --secondary-color: #fe8019;
+            --accent-color: #8ec07c;
+            --bg-primary: #282828;
+            --bg-secondary: #3c3836;
+            --bg-card: #504945;
+            --text-primary: #ebdbb2;
+            --text-secondary: #d5c4a1;
+            --text-muted: #a89984;
             --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            --shadow: 0 10px 25px rgba(0,0,0,0.3);
+            --shadow: 0 10px 25px rgba(0,0,0,0.4);
             --border-radius: 12px;
         }
 
@@ -50,7 +50,7 @@
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(15, 23, 42, 0.95);
+            background: rgba(40, 40, 40, 0.95);
             backdrop-filter: blur(10px);
             z-index: 1000;
             padding: 1rem 0;
@@ -168,7 +168,7 @@
 
         .cta-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 15px 30px rgba(189, 152, 19, 0.4);
         }
 
         /* Sections */
@@ -232,10 +232,9 @@
 
         /* Projects Grid */
         .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
         }
 
         .project-card {
@@ -245,10 +244,15 @@
             box-shadow: var(--shadow);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 2rem;
         }
 
         .project-card:hover {
-            transform: translateY(-10px);
+            transform: scale(1.02);
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
@@ -815,9 +819,9 @@
         window.addEventListener('scroll', () => {
             const navbar = document.querySelector('.navbar');
             if (window.scrollY > 100) {
-                navbar.style.background = 'rgba(15, 23, 42, 0.98)';
+                navbar.style.background = 'rgba(40, 40, 40, 0.98)';
             } else {
-                navbar.style.background = 'rgba(15, 23, 42, 0.95)';
+                navbar.style.background = 'rgba(40, 40, 40, 0.95)';
             }
         });
 
@@ -964,7 +968,7 @@
             particle.style.position = 'fixed';
             particle.style.width = '2px';
             particle.style.height = '2px';
-            particle.style.background = '#6366f1';
+            particle.style.background = '#fabd2f';
             particle.style.borderRadius = '50%';
             particle.style.pointerEvents = 'none';
             particle.style.opacity = '0.3';
