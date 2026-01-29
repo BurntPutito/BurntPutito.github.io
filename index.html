@@ -226,6 +226,13 @@
             padding: 48px;
         }
 
+        .content-body-with-preview {
+            padding: 48px;
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+        }
+
         /* File Grid */
         .file-grid {
             display: grid;
@@ -512,9 +519,11 @@
 
         /* Preview Panel */
         .preview-panel {
-            width: 320px;
+            width: 380px;
+            min-width: 380px;
             background: var(--bg-sidebar);
-            border-left: 1px solid var(--border);
+            border: 1px solid var(--border);
+            border-radius: 12px;
             padding: 24px;
             overflow-y: auto;
             display: none;
@@ -909,7 +918,7 @@
                     <h1 class="content-title">About Me</h1>
                     <p class="content-subtitle">Developer, Designer, Creator</p>
                 </div>
-                <div class="content-body">
+                <div class="content-body content-body-with-preview">
                     <div class="about-content">
                         <div class="about-card">
                             <h3>Introduction</h3>
@@ -927,6 +936,76 @@
                             <p>Led development teams and mentored junior developers</p>
                         </div>
                     </div>
+
+                    <!-- Preview Panel for About Section -->
+                    <aside class="preview-panel active" id="about-preview">
+                        <div class="preview-header">
+                            <div class="preview-image">
+                                👤
+                                <!-- Replace with: <img src="your-photo.jpg" alt="Your Name"> -->
+                            </div>
+                            <div class="preview-name">Your Name</div>
+                            <div class="preview-title">Full Stack Developer</div>
+                        </div>
+
+                        <div class="preview-divider"></div>
+
+                        <div class="preview-section">
+                            <div class="preview-section-title">Personal Info</div>
+                            <div class="preview-info-item">
+                                <span class="preview-info-label">Age</span>
+                                <span class="preview-info-value">25</span>
+                            </div>
+                            <div class="preview-info-item">
+                                <span class="preview-info-label">Birthday</span>
+                                <span class="preview-info-value">January 15, 1999</span>
+                            </div>
+                            <div class="preview-info-item">
+                                <span class="preview-info-label">Location</span>
+                                <span class="preview-info-value">Tunasan, PH</span>
+                            </div>
+                            <div class="preview-info-item">
+                                <span class="preview-info-label">Languages</span>
+                                <span class="preview-info-value">English, Filipino</span>
+                            </div>
+                        </div>
+
+                        <div class="preview-divider"></div>
+
+                        <div class="preview-section">
+                            <div class="preview-section-title">Statistics</div>
+                            <div class="preview-stats">
+                                <div class="preview-stat">
+                                    <span class="preview-stat-value">12</span>
+                                    <span class="preview-stat-label">Projects</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="preview-stat-value">5+</span>
+                                    <span class="preview-stat-label">Years</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="preview-stat-value">50+</span>
+                                    <span class="preview-stat-label">Clients</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="preview-stat-value">100%</span>
+                                    <span class="preview-stat-label">Coffee</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="preview-divider"></div>
+
+                        <div class="preview-section">
+                            <div class="preview-section-title">Connect</div>
+                            <div class="preview-social">
+                                <a href="#" class="preview-social-btn" title="GitHub">💻</a>
+                                <a href="#" class="preview-social-btn" title="LinkedIn">💼</a>
+                                <a href="#" class="preview-social-btn" title="Twitter">🐦</a>
+                                <a href="#" class="preview-social-btn" title="Email">📧</a>
+                            </div>
+                        </div>
+                    </aside>
                 </div>
             </div>
 
@@ -1020,76 +1099,6 @@
                 </div>
             </div>
         </main>
-
-        <!-- Preview Panel for About Section -->
-            <aside class="preview-panel" id="about-preview">
-                <div class="preview-header">
-                    <div class="preview-image">
-                        👤
-                        <!-- Replace with: <img src="your-photo.jpg" alt="Your Name"> -->
-                    </div>
-                    <div class="preview-name">Your Name</div>
-                    <div class="preview-title">Full Stack Developer</div>
-                </div>
-
-                <div class="preview-divider"></div>
-
-                <div class="preview-section">
-                    <div class="preview-section-title">Personal Info</div>
-                    <div class="preview-info-item">
-                        <span class="preview-info-label">Age</span>
-                        <span class="preview-info-value">25</span>
-                    </div>
-                    <div class="preview-info-item">
-                        <span class="preview-info-label">Birthday</span>
-                        <span class="preview-info-value">January 15, 1999</span>
-                    </div>
-                    <div class="preview-info-item">
-                        <span class="preview-info-label">Location</span>
-                        <span class="preview-info-value">Tunasan, PH</span>
-                    </div>
-                    <div class="preview-info-item">
-                        <span class="preview-info-label">Languages</span>
-                        <span class="preview-info-value">English, Filipino</span>
-                    </div>
-                </div>
-
-                <div class="preview-divider"></div>
-
-                <div class="preview-section">
-                    <div class="preview-section-title">Statistics</div>
-                    <div class="preview-stats">
-                        <div class="preview-stat">
-                            <span class="preview-stat-value">12</span>
-                            <span class="preview-stat-label">Projects</span>
-                        </div>
-                        <div class="preview-stat">
-                            <span class="preview-stat-value">5+</span>
-                            <span class="preview-stat-label">Years</span>
-                        </div>
-                        <div class="preview-stat">
-                            <span class="preview-stat-value">50+</span>
-                            <span class="preview-stat-label">Clients</span>
-                        </div>
-                        <div class="preview-stat">
-                            <span class="preview-stat-value">100%</span>
-                            <span class="preview-stat-label">Coffee</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="preview-divider"></div>
-
-                <div class="preview-section">
-                    <div class="preview-section-title">Connect</div>
-                    <div class="preview-social">
-                        <a href="#" class="preview-social-btn" title="GitHub">💻</a>
-                        <a href="#" class="preview-social-btn" title="LinkedIn">💼</a>
-                        <a href="#" class="preview-social-btn" title="Twitter">🐦</a>
-                        <a href="#" class="preview-social-btn" title="Email">📧</a>
-                    </div>
-                </div>
-            </aside>
     </div>
 
     <!-- Status Bar -->
@@ -1135,7 +1144,7 @@
                     }
                 });
 
-                // Show preview panel only on About page
+                // Show/hide preview panel based on section
                 if (section === 'about') {
                     previewPanel.classList.add('active');
                 } else {
@@ -1143,11 +1152,6 @@
                 }
             });
         });
-
-        // Show preview panel on initial load if About is active
-        if (document.getElementById('about').classList.contains('active')) {
-            previewPanel.classList.add('active');
-        }
 
         // Update time
         function updateTime() {
