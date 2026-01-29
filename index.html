@@ -46,30 +46,39 @@
 
         .window-controls {
             display: flex;
-            gap: 8px;
+            gap: 0;
+            margin-left: auto;
         }
 
-        .window-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
+        .window-button {
+            width: 46px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
             transition: all 0.2s;
+            font-size: 10px;
+            color: var(--text-primary);
+            background: transparent;
+            border: none;
         }
 
-        .window-dot.close { background: #ff5f56; }
-        .window-dot.minimize { background: #ffbd2e; }
-        .window-dot.maximize { background: #27c93f; }
+        .window-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
 
-        .window-dot:hover {
-            transform: scale(1.2);
-            filter: brightness(1.2);
+        .window-button.close:hover {
+            background: #e81123;
+            color: white;
+        }
+
+        .window-button svg {
+            width: 10px;
+            height: 10px;
         }
 
         .window-title {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
             font-family: 'Syne', sans-serif;
             font-weight: 600;
             font-size: 13px;
@@ -501,12 +510,25 @@
 <body>
     <!-- Window Chrome -->
     <div class="window-chrome">
-        <div class="window-controls">
-            <div class="window-dot close"></div>
-            <div class="window-dot minimize"></div>
-            <div class="window-dot maximize"></div>
-        </div>
         <div class="window-title">portfolio.sys</div>
+        <div class="window-controls">
+            <button class="window-button minimize" title="Minimize">
+                <svg viewBox="0 0 10 1" fill="currentColor">
+                    <rect width="10" height="1"/>
+                </svg>
+            </button>
+            <button class="window-button maximize" title="Maximize">
+                <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1">
+                    <rect x="0.5" y="0.5" width="9" height="9"/>
+                </svg>
+            </button>
+            <button class="window-button close" title="Close">
+                <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1">
+                    <line x1="0" y1="0" x2="10" y2="10"/>
+                    <line x1="10" y1="0" x2="0" y2="10"/>
+                </svg>
+            </button>
+        </div>
     </div>
 
     <div class="container">
