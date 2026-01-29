@@ -504,6 +504,170 @@
             .file-grid {
                 grid-template-columns: 1fr;
             }
+
+            .preview-panel {
+                display: none;
+            }
+        }
+
+        /* Preview Panel */
+        .preview-panel {
+            width: 320px;
+            background: var(--bg-sidebar);
+            border-left: 1px solid var(--border);
+            padding: 24px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .preview-panel.active {
+            display: block;
+            animation: slideInRight 0.3s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .preview-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .preview-image {
+            width: 160px;
+            height: 160px;
+            border-radius: 12px;
+            margin: 0 auto 16px;
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+            border: 3px solid var(--border);
+            overflow: hidden;
+        }
+
+        .preview-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .preview-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .preview-title {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .preview-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 20px 0;
+        }
+
+        .preview-section {
+            margin-bottom: 20px;
+        }
+
+        .preview-section-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .preview-info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .preview-info-label {
+            color: var(--text-secondary);
+        }
+
+        .preview-info-value {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .preview-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .preview-stat {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .preview-stat-value {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .preview-stat-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .preview-social {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .preview-social-btn {
+            flex: 1;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 18px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .preview-social-btn:hover {
+            background: rgba(250, 189, 47, 0.1);
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
         }
     </style>
 </head>
@@ -856,6 +1020,76 @@
                 </div>
             </div>
         </main>
+
+        <!-- Preview Panel for About Section -->
+            <aside class="preview-panel" id="about-preview">
+                <div class="preview-header">
+                    <div class="preview-image">
+                        👤
+                        <!-- Replace with: <img src="your-photo.jpg" alt="Your Name"> -->
+                    </div>
+                    <div class="preview-name">Your Name</div>
+                    <div class="preview-title">Full Stack Developer</div>
+                </div>
+
+                <div class="preview-divider"></div>
+
+                <div class="preview-section">
+                    <div class="preview-section-title">Personal Info</div>
+                    <div class="preview-info-item">
+                        <span class="preview-info-label">Age</span>
+                        <span class="preview-info-value">25</span>
+                    </div>
+                    <div class="preview-info-item">
+                        <span class="preview-info-label">Birthday</span>
+                        <span class="preview-info-value">January 15, 1999</span>
+                    </div>
+                    <div class="preview-info-item">
+                        <span class="preview-info-label">Location</span>
+                        <span class="preview-info-value">Tunasan, PH</span>
+                    </div>
+                    <div class="preview-info-item">
+                        <span class="preview-info-label">Languages</span>
+                        <span class="preview-info-value">English, Filipino</span>
+                    </div>
+                </div>
+
+                <div class="preview-divider"></div>
+
+                <div class="preview-section">
+                    <div class="preview-section-title">Statistics</div>
+                    <div class="preview-stats">
+                        <div class="preview-stat">
+                            <span class="preview-stat-value">12</span>
+                            <span class="preview-stat-label">Projects</span>
+                        </div>
+                        <div class="preview-stat">
+                            <span class="preview-stat-value">5+</span>
+                            <span class="preview-stat-label">Years</span>
+                        </div>
+                        <div class="preview-stat">
+                            <span class="preview-stat-value">50+</span>
+                            <span class="preview-stat-label">Clients</span>
+                        </div>
+                        <div class="preview-stat">
+                            <span class="preview-stat-value">100%</span>
+                            <span class="preview-stat-label">Coffee</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="preview-divider"></div>
+
+                <div class="preview-section">
+                    <div class="preview-section-title">Connect</div>
+                    <div class="preview-social">
+                        <a href="#" class="preview-social-btn" title="GitHub">💻</a>
+                        <a href="#" class="preview-social-btn" title="LinkedIn">💼</a>
+                        <a href="#" class="preview-social-btn" title="Twitter">🐦</a>
+                        <a href="#" class="preview-social-btn" title="Email">📧</a>
+                    </div>
+                </div>
+            </aside>
     </div>
 
     <!-- Status Bar -->
@@ -883,6 +1117,7 @@
         // Navigation
         const navItems = document.querySelectorAll('.nav-item');
         const contentSections = document.querySelectorAll('.content-section');
+        const previewPanel = document.getElementById('about-preview');
 
         navItems.forEach(item => {
             item.addEventListener('click', () => {
@@ -899,8 +1134,20 @@
                         content.classList.add('active');
                     }
                 });
+
+                // Show preview panel only on About page
+                if (section === 'about') {
+                    previewPanel.classList.add('active');
+                } else {
+                    previewPanel.classList.remove('active');
+                }
             });
         });
+
+        // Show preview panel on initial load if About is active
+        if (document.getElementById('about').classList.contains('active')) {
+            previewPanel.classList.add('active');
+        }
 
         // Update time
         function updateTime() {
