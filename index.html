@@ -234,11 +234,6 @@
             justify-content: space-between;
         }
 
-        .about-content {
-            flex: 1;
-            min-width: 0;
-        }
-
         /* File Grid */
         .file-grid {
             display: grid;
@@ -376,6 +371,11 @@
 
         .content-section.active {
             display: block;
+        }
+
+        .about-content {
+            flex: 1;
+            min-width: 0;
         }
 
         .about-card {
@@ -520,8 +520,8 @@
 
         /* Preview Panel */
         .preview-panel {
-            width: 400px;
-            min-width: 400px;
+            width: 380px;
+            min-width: 380px;
             background: var(--bg-sidebar);
             border: 1px solid var(--border);
             border-radius: 12px;
@@ -678,6 +678,259 @@
             background: rgba(250, 189, 47, 0.1);
             border-color: var(--accent-primary);
             transform: translateY(-2px);
+        }
+
+        /* Projects Details View */
+        .projects-container {
+            display: flex;
+            gap: 32px;
+            align-items: flex-start;
+        }
+
+        .projects-list {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .projects-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .projects-table thead {
+            background: var(--bg-sidebar);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .projects-table th {
+            padding: 16px 20px;
+            text-align: left;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .projects-table tbody tr {
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .projects-table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .projects-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .projects-table tbody tr.selected {
+            background: rgba(250, 189, 47, 0.1);
+            border-left: 3px solid var(--accent-primary);
+        }
+
+        .projects-table td {
+            padding: 16px 20px;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .project-name-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .project-icon {
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-name {
+            font-weight: 500;
+        }
+
+        .project-type {
+            color: var(--text-secondary);
+        }
+
+        .project-date {
+            color: var(--text-secondary);
+        }
+
+        .project-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-completed {
+            background: rgba(184, 187, 38, 0.15);
+            color: #b8bb26;
+            border: 1px solid rgba(184, 187, 38, 0.3);
+        }
+
+        .status-in-progress {
+            background: rgba(250, 189, 47, 0.15);
+            color: var(--accent-primary);
+            border: 1px solid rgba(250, 189, 47, 0.3);
+        }
+
+        .status-planned {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        /* Project Preview Panel */
+        .project-preview-panel {
+            width: 400px;
+            min-width: 400px;
+            background: var(--bg-sidebar);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            overflow-y: auto;
+            display: none;
+            max-height: calc(100vh - 200px);
+        }
+
+        .project-preview-panel.active {
+            display: block;
+            animation: slideInRight 0.3s ease-out;
+        }
+
+        .project-preview-header {
+            margin-bottom: 24px;
+        }
+
+        .project-preview-icon {
+            width: 100%;
+            height: 200px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            margin-bottom: 20px;
+            border: 3px solid var(--border);
+        }
+
+        .project-preview-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .project-preview-type {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .project-preview-description {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .project-preview-section {
+            margin-bottom: 24px;
+        }
+
+        .project-preview-section-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .project-tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .project-tech-tag {
+            background: rgba(250, 189, 47, 0.15);
+            color: var(--accent-primary);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            border: 1px solid rgba(250, 189, 47, 0.3);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .project-link-btn {
+            flex: 1;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            display: block;
+        }
+
+        .project-link-btn:hover {
+            background: rgba(250, 189, 47, 0.1);
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        .project-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .project-info-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .project-info-label {
+            font-size: 10px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .project-info-value {
+            font-family: 'Syne', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent-primary);
         }
     </style>
 </head>
@@ -836,75 +1089,94 @@
                     <h1 class="content-title">Projects</h1>
                     <p class="content-subtitle">A collection of my work</p>
                 </div>
-                <div class="content-body">
-                    <div class="file-grid">
-                        <div class="file-card">
-                            <div class="file-card-content">
-                                <span class="file-icon">🎯</span>
-                                <h3 class="file-title">E-Commerce Platform</h3>
-                                <p class="file-description">Full-stack online store with payment integration and admin dashboard</p>
-                                <div class="file-meta">
-                                    <span class="file-tag">React</span>
-                                    <span class="file-tag">Node.js</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="file-card">
-                            <div class="file-card-content">
-                                <span class="file-icon">📱</span>
-                                <h3 class="file-title">Mobile Weather App</h3>
-                                <p class="file-description">Beautiful weather forecasting app with location tracking</p>
-                                <div class="file-meta">
-                                    <span class="file-tag">React Native</span>
-                                    <span class="file-tag">API</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="file-card">
-                            <div class="file-card-content">
-                                <span class="file-icon">🎮</span>
-                                <h3 class="file-title">Portfolio Game</h3>
-                                <p class="file-description">Interactive browser game built with canvas and vanilla JS</p>
-                                <div class="file-meta">
-                                    <span class="file-tag">JavaScript</span>
-                                    <span class="file-tag">Canvas</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="file-card">
-                            <div class="file-card-content">
-                                <span class="file-icon">🤖</span>
-                                <h3 class="file-title">AI Chat Assistant</h3>
-                                <p class="file-description">Custom chatbot with natural language processing</p>
-                                <div class="file-meta">
-                                    <span class="file-tag">Python</span>
-                                    <span class="file-tag">AI/ML</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="file-card">
-                            <div class="file-card-content">
-                                <span class="file-icon">📊</span>
-                                <h3 class="file-title">Data Visualization</h3>
-                                <p class="file-description">Interactive charts and graphs for business analytics</p>
-                                <div class="file-meta">
-                                    <span class="file-tag">D3.js</span>
-                                    <span class="file-tag">Analytics</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="file-card">
-                            <div class="file-card-content">
-                                <span class="file-icon">🎨</span>
-                                <h3 class="file-title">Design System</h3>
-                                <p class="file-description">Comprehensive UI component library and guidelines</p>
-                                <div class="file-meta">
-                                    <span class="file-tag">Figma</span>
-                                    <span class="file-tag">React</span>
-                                </div>
-                            </div>
-                        </div>
+                <div class="content-body content-body-with-preview">
+                    <div class="projects-list">
+                        <table class="projects-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 40%;">Name</th>
+                                    <th style="width: 20%;">Type</th>
+                                    <th style="width: 20%;">Date</th>
+                                    <th style="width: 20%;">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="project-row" data-project="ecommerce">
+                                    <td>
+                                        <div class="project-name-cell">
+                                            <span class="project-icon">🎯</span>
+                                            <span class="project-name">E-Commerce Platform</span>
+                                        </div>
+                                    </td>
+                                    <td class="project-type">Web App</td>
+                                    <td class="project-date">Dec 2024</td>
+                                    <td><span class="project-status status-completed">Completed</span></td>
+                                </tr>
+                                <tr class="project-row" data-project="weather">
+                                    <td>
+                                        <div class="project-name-cell">
+                                            <span class="project-icon">📱</span>
+                                            <span class="project-name">Mobile Weather App</span>
+                                        </div>
+                                    </td>
+                                    <td class="project-type">Mobile App</td>
+                                    <td class="project-date">Nov 2024</td>
+                                    <td><span class="project-status status-completed">Completed</span></td>
+                                </tr>
+                                <tr class="project-row" data-project="game">
+                                    <td>
+                                        <div class="project-name-cell">
+                                            <span class="project-icon">🎮</span>
+                                            <span class="project-name">Behind Corridors Horror Game</span>
+                                        </div>
+                                    </td>
+                                    <td class="project-type">Game</td>
+                                    <td class="project-date">Oct 2024</td>
+                                    <td><span class="project-status status-in-progress">In Progress</span></td>
+                                </tr>
+                                <tr class="project-row" data-project="chatbot">
+                                    <td>
+                                        <div class="project-name-cell">
+                                            <span class="project-icon">🤖</span>
+                                            <span class="project-name">AI Chat Assistant</span>
+                                        </div>
+                                    </td>
+                                    <td class="project-type">AI/ML</td>
+                                    <td class="project-date">Sep 2024</td>
+                                    <td><span class="project-status status-completed">Completed</span></td>
+                                </tr>
+                                <tr class="project-row" data-project="dataviz">
+                                    <td>
+                                        <div class="project-name-cell">
+                                            <span class="project-icon">📊</span>
+                                            <span class="project-name">Data Visualization Dashboard</span>
+                                        </div>
+                                    </td>
+                                    <td class="project-type">Dashboard</td>
+                                    <td class="project-date">Aug 2024</td>
+                                    <td><span class="project-status status-completed">Completed</span></td>
+                                </tr>
+                                <tr class="project-row" data-project="design">
+                                    <td>
+                                        <div class="project-name-cell">
+                                            <span class="project-icon">🎨</span>
+                                            <span class="project-name">Design System Library</span>
+                                        </div>
+                                    </td>
+                                    <td class="project-type">UI/UX</td>
+                                    <td class="project-date">Jul 2024</td>
+                                    <td><span class="project-status status-planned">Planned</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
+
+                    <!-- Project Preview Panel -->
+                    <aside class="project-preview-panel" id="project-preview">
+                        <div class="project-preview-content">
+                            <!-- Content will be dynamically updated via JavaScript -->
+                        </div>
+                    </aside>
                 </div>
             </div>
 
@@ -955,15 +1227,15 @@
                             <div class="preview-section-title">Personal Info</div>
                             <div class="preview-info-item">
                                 <span class="preview-info-label">Age</span>
-                                <span class="preview-info-value">21</span>
+                                <span class="preview-info-value">25</span>
                             </div>
                             <div class="preview-info-item">
                                 <span class="preview-info-label">Birthday</span>
-                                <span class="preview-info-value">October 9, 2004</span>
+                                <span class="preview-info-value">January 15, 1999</span>
                             </div>
                             <div class="preview-info-item">
-                                <span class="preview-info-label">Country</span>
-                                <span class="preview-info-value">Philippines</span>
+                                <span class="preview-info-label">Location</span>
+                                <span class="preview-info-value">Tunasan, PH</span>
                             </div>
                             <div class="preview-info-item">
                                 <span class="preview-info-label">Languages</span>
@@ -981,7 +1253,7 @@
                                     <span class="preview-stat-label">Projects</span>
                                 </div>
                                 <div class="preview-stat">
-                                    <span class="preview-stat-value">2</span>
+                                    <span class="preview-stat-value">5+</span>
                                     <span class="preview-stat-label">Years</span>
                                 </div>
                                 <div class="preview-stat">
@@ -1151,6 +1423,12 @@
                 } else {
                     previewPanel.classList.remove('active');
                 }
+
+                // Hide project preview panel when not on projects
+                const projectPreviewPanel = document.getElementById('project-preview');
+                if (section !== 'projects') {
+                    projectPreviewPanel.classList.remove('active');
+                }
             });
         });
 
@@ -1182,6 +1460,155 @@
                 setTimeout(() => {
                     this.style.animation = '';
                 }, 10);
+            });
+        });
+
+        // Projects functionality
+        const projectRows = document.querySelectorAll('.project-row');
+        const projectPreviewPanel = document.getElementById('project-preview');
+        const projectPreviewContent = document.querySelector('.project-preview-content');
+
+        // Project data
+        const projectsData = {
+            ecommerce: {
+                icon: '🎯',
+                name: 'E-Commerce Platform',
+                type: 'Web Application',
+                description: 'A full-featured e-commerce platform with secure payment processing, real-time inventory management, and comprehensive admin dashboard. Built with modern web technologies for optimal performance and user experience.',
+                tech: ['React', 'Node.js', 'MongoDB', 'Stripe', 'Redux', 'Express'],
+                date: 'December 2024',
+                status: 'Completed',
+                duration: '3 months',
+                role: 'Full Stack Developer'
+            },
+            weather: {
+                icon: '📱',
+                name: 'Mobile Weather App',
+                type: 'Mobile Application',
+                description: 'Beautiful and intuitive weather forecasting application with real-time location tracking, 7-day forecasts, and interactive weather maps. Features stunning animations and a clean, modern interface.',
+                tech: ['React Native', 'Weather API', 'Redux', 'Geolocation', 'Lottie'],
+                date: 'November 2024',
+                status: 'Completed',
+                duration: '2 months',
+                role: 'Mobile Developer'
+            },
+            game: {
+                icon: '🎮',
+                name: 'Behind Corridors Horror Game',
+                type: 'Browser Game',
+                description: 'An immersive horror game experience built entirely in the browser using Canvas API and vanilla JavaScript. Features atmospheric sound design, dynamic lighting, and engaging gameplay mechanics.',
+                tech: ['JavaScript', 'Canvas API', 'Web Audio API', 'CSS3'],
+                date: 'October 2024',
+                status: 'In Progress',
+                duration: 'Ongoing',
+                role: 'Game Developer'
+            },
+            chatbot: {
+                icon: '🤖',
+                name: 'AI Chat Assistant',
+                type: 'AI Application',
+                description: 'Intelligent chatbot powered by natural language processing and machine learning. Capable of understanding context, maintaining conversation history, and providing helpful, human-like responses.',
+                tech: ['Python', 'TensorFlow', 'NLP', 'Flask', 'OpenAI API'],
+                date: 'September 2024',
+                status: 'Completed',
+                duration: '4 months',
+                role: 'AI/ML Engineer'
+            },
+            dataviz: {
+                icon: '📊',
+                name: 'Data Visualization Dashboard',
+                type: 'Business Dashboard',
+                description: 'Interactive data visualization dashboard for business analytics featuring real-time charts, customizable widgets, and comprehensive reporting tools. Helps businesses make data-driven decisions.',
+                tech: ['D3.js', 'React', 'Chart.js', 'WebSocket', 'PostgreSQL'],
+                date: 'August 2024',
+                status: 'Completed',
+                duration: '2.5 months',
+                role: 'Frontend Developer'
+            },
+            design: {
+                icon: '🎨',
+                name: 'Design System Library',
+                type: 'UI/UX Design',
+                description: 'Comprehensive design system and component library with extensive documentation, accessibility guidelines, and reusable UI components. Created to ensure consistency across all product designs.',
+                tech: ['Figma', 'React', 'Storybook', 'CSS-in-JS', 'TypeScript'],
+                date: 'July 2024',
+                status: 'Planned',
+                duration: 'Not started',
+                role: 'UI/UX Designer'
+            }
+        };
+
+        function showProjectPreview(projectId) {
+            const project = projectsData[projectId];
+            if (!project) return;
+
+            projectPreviewContent.innerHTML = `
+                <div class="project-preview-header">
+                    <div class="project-preview-icon">${project.icon}</div>
+                    <h3 class="project-preview-title">${project.name}</h3>
+                    <p class="project-preview-type">${project.type}</p>
+                </div>
+
+                <p class="project-preview-description">${project.description}</p>
+
+                <div class="preview-divider"></div>
+
+                <div class="project-preview-section">
+                    <div class="project-preview-section-title">Technologies</div>
+                    <div class="project-tech-list">
+                        ${project.tech.map(tech => `<span class="project-tech-tag">${tech}</span>`).join('')}
+                    </div>
+                </div>
+
+                <div class="preview-divider"></div>
+
+                <div class="project-preview-section">
+                    <div class="project-preview-section-title">Project Info</div>
+                    <div class="project-info-grid">
+                        <div class="project-info-item">
+                            <div class="project-info-label">Date</div>
+                            <div class="project-info-value">${project.date.split(' ')[0]}</div>
+                        </div>
+                        <div class="project-info-item">
+                            <div class="project-info-label">Duration</div>
+                            <div class="project-info-value">${project.duration}</div>
+                        </div>
+                        <div class="project-info-item">
+                            <div class="project-info-label">Status</div>
+                            <div class="project-info-value">${project.status}</div>
+                        </div>
+                        <div class="project-info-item">
+                            <div class="project-info-label">Role</div>
+                            <div class="project-info-value" style="font-size: 12px;">${project.role}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="preview-divider"></div>
+
+                <div class="project-preview-section">
+                    <div class="project-preview-section-title">Links</div>
+                    <div class="project-links">
+                        <a href="#" class="project-link-btn">View Demo</a>
+                        <a href="#" class="project-link-btn">GitHub</a>
+                    </div>
+                </div>
+            `;
+
+            projectPreviewPanel.classList.add('active');
+        }
+
+        projectRows.forEach(row => {
+            row.addEventListener('click', function() {
+                // Remove selected class from all rows
+                projectRows.forEach(r => r.classList.remove('selected'));
+                
+                // Add selected class to clicked row
+                this.classList.add('selected');
+                
+                // Show preview for this project
+                const projectId = this.dataset.project;
+                showProjectPreview(projectId);
             });
         });
     </script>
