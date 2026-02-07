@@ -1101,7 +1101,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="project-row" data-project="ecommerce">
+                                <tr class="project-row" data-project="design">
                                     <td>
                                         <div class="project-name-cell">
                                             <span class="project-icon">🎨</span>
@@ -1516,7 +1516,7 @@
         // Projects
         const projectsData = {
             ecommerce: {
-                icon: '🎨',
+                image: 'images/CyberpunkPreview.png',
                 name: 'Cyberpunk Rainmeter Theme',
                 type: 'Web Application',
                 description: 'A full-featured e-commerce platform with secure payment processing, real-time inventory management, and comprehensive admin dashboard. Built with modern web technologies for optimal performance and user experience.',
@@ -1524,7 +1524,7 @@
                 date: 'December 2024',
                 status: 'Completed',
                 duration: '3 months',
-                role: 'Full Stack Developer'
+                platform: 'Full Stack Developer'
             },
             weather: {
                 icon: '📱',
@@ -1535,7 +1535,7 @@
                 date: 'November 2024',
                 status: 'Completed',
                 duration: '2 months',
-                role: 'Mobile Developer'
+                platform: 'Mobile Developer'
             },
             game: {
                 icon: '🎮',
@@ -1546,7 +1546,7 @@
                 date: 'October 2024',
                 status: 'In Progress',
                 duration: 'Ongoing',
-                role: 'Game Developer'
+                platform: 'Game Developer'
             },
             chatbot: {
                 icon: '🤖',
@@ -1557,7 +1557,7 @@
                 date: 'September 2024',
                 status: 'Completed',
                 duration: '4 months',
-                role: 'AI/ML Engineer'
+                platform: 'AI/ML Engineer'
             },
             dataviz: {
                 icon: '📊',
@@ -1568,18 +1568,18 @@
                 date: 'August 2024',
                 status: 'Completed',
                 duration: '2.5 months',
-                role: 'Frontend Developer'
+                platform: 'Frontend Developer'
             },
             design: {
-                icon: '🎨',
-                name: 'Design System Library',
-                type: 'UI/UX Design',
-                description: 'Comprehensive design system and component library with extensive documentation, accessibility guidelines, and reusable UI components. Created to ensure consistency across all product designs.',
-                tech: ['Figma', 'React', 'Storybook', 'CSS-in-JS', 'TypeScript'],
-                date: 'July 2024',
-                status: 'Planned',
-                duration: 'Not started',
-                role: 'UI/UX Designer'
+                image: 'images/CyberpunkPreview.png',
+                name: 'Cyberpunk Rainmeter Theme',
+                type: 'UI/UX Design for Windows',
+                description: 'A sleek, futuristic Rainmeter theme inspired by cyberpunk aesthetics, featuring dynamic pixelated animations, customizable widgets (you can create your own), and a vibey neon color palette. It also comes with an optional Adventure Time mini pixelated art, with their own unique cute animation.',
+                tech: ['Rainmeter', 'Lua', 'Paint.NET', 'Scripting'],
+                date: 'September 2022',
+                status: 'Complete',
+                duration: '6 Weeks',
+                platform: 'Windows'
             }
         };
 
@@ -1589,7 +1589,9 @@
 
             projectPreviewContent.innerHTML = `
                 <div class="project-preview-header">
-                    <div class="project-preview-icon">${project.icon}</div>
+                    <div class="project-preview-icon">
+                        ${project.image ? `<img src="${project.image}" alt="${project.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">` : project.icon}
+                    </div>
                     <h3 class="project-preview-title">${project.name}</h3>
                     <p class="project-preview-type">${project.type}</p>
                 </div>
@@ -1623,8 +1625,8 @@
                             <div class="project-info-value">${project.status}</div>
                         </div>
                         <div class="project-info-item">
-                            <div class="project-info-label">Role</div>
-                            <div class="project-info-value" style="font-size: 12px;">${project.role}</div>
+                            <div class="project-info-label">Platform</div>
+                            <div class="project-info-value">${project.platform}</div>
                         </div>
                     </div>
                 </div>
@@ -1635,7 +1637,7 @@
                     <div class="project-preview-section-title">Links</div>
                     <div class="project-links">
                         <a href="#" class="project-link-btn">View Demo</a>
-                        <a href="#" class="project-link-btn">GitHub</a>
+                        <a href="https://github.com/BurntPutito/CyberpunkTheme-Rainmeter" class="project-link-btn">GitHub</a>
                     </div>
                 </div>
             `;
