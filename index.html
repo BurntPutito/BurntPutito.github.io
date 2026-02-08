@@ -108,7 +108,7 @@
         }
 
         .cute-message {
-            font-size: 18px;
+            font-size: 20px;
             color: #888;
             margin-bottom: 40px;
             line-height: 1.6;
@@ -186,19 +186,13 @@
             background: #e0e0e0;
         }
 
-        /* Success screen */
-        .success-screen {
+        /* All screens */
+        .screen {
             display: none;
             animation: fadeIn 0.8s ease-out;
         }
 
-        /* Final message screen */
-        .final-screen {
-            display: none;
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        .final-screen.active {
+        .screen.active {
             display: block;
         }
 
@@ -211,14 +205,6 @@
                 opacity: 1;
                 transform: scale(1);
             }
-        }
-
-        .success-screen.active {
-            display: block;
-        }
-
-        .question-screen.hidden {
-            display: none;
         }
 
         .celebration {
@@ -311,6 +297,42 @@
                 transform: rotate(10deg);
             }
         }
+
+        /* Letter style */
+        .letter-box {
+            background: #fffef9;
+            padding: 40px;
+            border-radius: 15px;
+            border: 2px solid #ffb3e3;
+            text-align: left;
+            line-height: 1.8;
+            font-size: 18px;
+            color: #555;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
+            margin-top: 20px;
+            max-height: 600px;  /* ADD THIS */
+            overflow-y: auto;
+        }
+
+        .letter-signature {
+            text-align: right;
+            margin-top: 30px;
+            font-family: 'Pacifico', cursive;
+            color: #ff1493;
+            font-size: 24px;
+        }
+
+        /* Clickable screen hint */
+        .click-hint {
+            font-size: 16px;
+            color: #999;
+            margin-top: 30px;
+            font-style: italic;
+        }
+
+        .clickable-screen {
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -318,83 +340,181 @@
     <div class="heart-container" id="heartContainer"></div>
 
     <div class="container">
-        <!-- Question Screen -->
-        <div class="question-screen" id="questionScreen">
-            <div class="emoji">💝</div>
-            <h1>Hey Beautiful!</h1>
-            <p class="question-text">Will you be my Valentine? 💕</p>
+        <!-- Page 1: First Apology Question -->
+        <div class="screen active" id="page1">
+            <img src="images/" alt="">
+            <h1>Hewow Wabbyyy Ko</h1>
+            <p class="question-text">Can you forgive me?</p>
             <p class="cute-message">
-                I've been thinking about this all week... <br>
-                You make every day feel special, so let's make this Valentine's extra sweet! 🌹
+                I'm really sorry for what happened last night... <br>
+                I know we had a misunderstanding and got messed up, and I want to make it right.
+                Will you give me another chance to show you how much I care for us?
             </p>
-            
-            <div class="button-container" id="buttonContainer">
-                <button class="yes-btn" onclick="handleYes()">
+            <img src="images/begging1.gif" alt="begging" width="200" height="200"> 
+            <img src="images/begging2.gif" alt="begging again" width="200" height="200">
+            <div class="button-container" id="buttonContainer1">
+                <button class="yes-btn" onclick="handlePage1Yes()">
                     <span style="position: relative; z-index: 1;">Yes! 💖</span>
                 </button>
-                <button class="no-btn" id="noBtn" onmouseover="moveButton()" onclick="moveButton()">
+                <button class="no-btn" id="noBtn1" onclick="handlePage1No()">
                     No 😢
                 </button>
             </div>
         </div>
 
-        <!-- Success Screen -->
-        <div class="success-screen" id="successScreen">
+        <!-- Page 2: Second Apology Question (if clicked No on Page 1) -->
+        <div class="screen" id="page2">
+            <img src="images/" alt="">
+            <h1>Please Wabbyyy 🥺</h1>
+            <p class="question-text">Di mo na ako wab? 🥺</p>
+            <p class="cute-message">
+                I know I let you down... but please can we sort this out? <br>
+                Love na love kita super kasi baby wabbyyy kita... and I don't want you to feel this way na... <br>
+                Please forgive meeee
+            </p>
+            <img src="images/sorry1.gif" alt="begging" width="200" height="200"> 
+            <img src="images/sorry2.gif" alt="begging again" width="200" height="200">
+            <div class="button-container" id="buttonContainer2">
+                <button class="yes-btn" onclick="handlePage2Yes()">
+                    <span style="position: relative; z-index: 1;">Ok Fine!</span>
+                    <img src="images/angry-notice-me.gif" alt="angryFine" width="100">
+                </button>
+            </div>
+        </div>
+
+        <!-- Page 3: Thank You (if Yes on Page 1) -->
+        <div class="screen clickable-screen" id="page3" onclick="goToPage('page5')">
+            <div class="celebration">🎉💕🎊</div>
+            <h2 class="success-title">Tenchu 🥺</h2>
+            <p class="success-message">
+                Thank you super wabbyyy ko, wab na wab kita super :3 <br>
+                I promise I'll make it up to you and show you how much you mean to me.
+            </p>
+            <div style="margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #fff5fb, #ffe4f3); border-radius: 20px; border: 3px solid #ffb3e3;">
+                <p style="font-size: 22px; color: #ff1493; font-weight: 700;">
+                    I love you wabbyyy ko
+                </p>
+                <p style="font-size: 18px; color: #666; margin-top: 15px; line-height: 1.6;">
+                    Love na love kita kahit ano man mangyari satin lagi nating hanapan ng paraan para maayos po ah, ayaw kitang mawala sa buhay ku...
+                </p>
+            </div>
+        </div>
+
+        <!-- Page 4: Finally Forgiven (if Yes on Page 2) -->
+        <div class="screen clickable-screen" id="page4" onclick="goToPage('page5')">
+            <div class="celebration">🎊💖🎉</div>
+            <img src="images/yippee-cat-kitty.gif" alt="" width="200">
+            <h2 class="success-title">Finally, Yeyyy!</h2>
+            <p class="success-message">
+                Sa wakas, ikaw talaga hirap mong suyuin, kuritn kita diyan eh.
+                Sa bagay di mo naman atoh matiis ih :3 <br>
+                Hihihi Thank you wabbyyy ko 🥰
+            </p>
+            <div style="margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #fff5fb, #ffe4f3); border-radius: 20px; border: 3px solid #ffb3e3;">
+                <p style="font-size: 22px; color: #ff1493; font-weight: 700;">
+                    Wab na wab kita super
+                </p>
+                <p style="font-size: 18px; color: #666; margin-top: 15px; line-height: 1.6;">
+                    I will try my best to make you feel special everyday wabbyyy ko, mwuahhh
+                </p>
+                <img src="images/lick.gif" alt="">
+            </div>
+        </div>
+
+        <!-- Page 5: Letter -->
+        <div class="screen" id="page5">
+            <h1 style="font-size: 40px;">Ito na yung Letter nimo 💌</h1>
+            <div class="letter-box">
+                <p style="margin-bottom: 20px;">My Baby Wabby,</p>
+                
+                <p style="margin-bottom: 15px;">
+                    Hello wabbyyy ko, I wanted for you to know first that I'm really really sorry if you felt left alone and unsentimental... I dont want you to actually feel that way... I love you with all my heart, I wanted you to feel special everyday, it's just that I have my certain lines when coming up with that... especially in my current situtation... But wabbyyy ko, still I want to be happy, I want to give everything to you, Im sorry if I'm not able to make it up to you when you wanted... Im really trying wabbyyy ko... How about bawi atoh? Make you feel special ulit kahit for the meantime, even if its not everyday, Ill still want that to happen. I love you wabbyyy ko, lagi lagi, I want to be closer to you everyday, I find love in you, I feel your sincerity towards sa akin, I feel na andami mong gustong gawin para sakin, kasi I know na wab na wab mo atoh... but do you feel the same way ba from me? I love you wabbyyy ko, Im sorry if hindi mo nararamdaman everyday, but promise Ill make it up to you when big na tayo and I have enough money na spoil you, as of now kasi wala pa talaga aku.... Nag iipon tlga ako ng makakaya ko para sa magiging date natin :3. I love you wabbyyy ko, In month of february, where love shines, I see us together dancing under the glooming sun, where we only cares for the two of us in those moments of being together, can we do that sa Valentines Day?
+                </p>
+
+                <p class="letter-signature">
+                    Forever yours, 💕<br>
+                    ¯\_(ツ)_/¯
+                </p>
+
+                <button class="yes-btn" onclick="goToPage('page6')" style="margin-top: 40px; padding: 20px 60px; font-size: 26px;">
+                    <span style="position: relative; z-index: 1;">I Love You Too 🥰</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Page 6: Valentine Question -->
+        <div class="screen" id="page6">
+            <div class="emoji">💝</div>
+            <h1>May I ask you now na?</h1>
+            <p class="question-text">Will you be my Valentine? 💕</p>
+            <p class="cute-message">
+                I've been thinking about it na already in the last few days.
+                You are very special to me, so let's make this Valentine's super sweet!
+            </p>
+            <img src="images/dudu-flower.gif" alt="" width="200">
+            <div class="button-container" id="buttonContainer6">
+                <button class="yes-btn" onclick="handleValentineYes()">
+                    <span style="position: relative; z-index: 1;">Yes! 💖</span>
+                </button>
+                <button class="no-btn" id="noBtn6" onmouseover="moveButton('noBtn6', 'buttonContainer6')" onclick="moveButton('noBtn6', 'buttonContainer6')">
+                    No 😢
+                </button>
+            </div>
+        </div>
+
+        <!-- Page 7: Schedule -->
+        <div class="screen" id="page7">
             <div class="celebration">🎉💕🎊</div>
             <h2 class="success-title">Yaaay! 💖</h2>
             <p class="success-message">
-                You just made me the happiest person ever! 😊<br>
-                I can't wait to spend this special day with you!
+                Super happy na atoh! 😊<br>
+                I can't wait to spend this special day with you naaaa
             </p>
             
             <div class="schedule-box">
-                <div class="schedule-title">Our Valentine's Day Plan 💝</div>
+                <div class="schedule-title">Our Satruday Valentine's Day Plan 💝</div>
                 
-                <div class="schedule-item" onclick="showFinalMessage()">
-                    <div class="schedule-time">🌅 Morning - 9:00 AM</div>
-                    <div class="schedule-activity">Breakfast date at that cute café you love</div>
+                <div class="schedule-item" onclick="goToPage('page8')">
+                    <div class="schedule-time">🌅 Morning - 10:00 AM</div>
+                    <div class="schedule-activity">Breakfast date at SM North</div>
                 </div>
                 
-                <div class="schedule-item" onclick="showFinalMessage()">
-                    <div class="schedule-time">☀️ Afternoon - 2:00 PM</div>
-                    <div class="schedule-activity">Walk in the park & ice cream adventure</div>
+                <div class="schedule-item" onclick="goToPage('page8')">
+                    <div class="schedule-time">☀️ Afternoon - 12:00 PM</div>
+                    <div class="schedule-activity">Walk and look around sa mall and Timezone</div>
                 </div>
                 
-                <div class="schedule-item" onclick="showFinalMessage()">
-                    <div class="schedule-time">🌆 Evening - 6:00 PM</div>
-                    <div class="schedule-activity">Romantic dinner at your favorite restaurant</div>
+                <div class="schedule-item" onclick="goToPage('page8')">
+                    <div class="schedule-time">🌆 Evening - 4:00 PM</div>
+                    <div class="schedule-activity">Romantic dinner sa Paresan (Jokie)</div>
                 </div>
                 
-                <div class="schedule-item" onclick="showFinalMessage()">
+                <div class="schedule-item" onclick="goToPage('page8')">
                     <div class="schedule-time">🌙 Night - 8:30 PM</div>
-                    <div class="schedule-activity">Movie night under the stars (or blankets!)</div>
+                    <div class="schedule-activity">Movie night under the stars (or sa kumot :3)</div>
                 </div>
             </div>
-            
-            <p class="success-message" style="margin-top: 30px; font-size: 16px; color: #999;">
-                💡 Click on any activity to see a special message!
-            </p>
         </div>
 
-        <!-- Final Message Screen -->
-        <div class="final-screen" id="finalScreen">
-            <div class="celebration">💕🎉💖</div>
+        <!-- Page 8: Final Message -->
+        <div class="screen" id="page8">
+            <img src="images/cat-cat-meme.gif" alt="" width="150">
             <h2 class="success-title">One More Thing...</h2>
             
-            <div class="final-message" style="margin-top: 40px; padding: 35px; background: linear-gradient(135deg, #ff1493, #ff69b4); border-radius: 20px; color: white; box-shadow: 0 20px 60px rgba(255, 20, 147, 0.4);">
+            <div style="margin-top: 40px; padding: 35px; background: linear-gradient(135deg, #ff1493, #ff69b4); border-radius: 20px; color: white; box-shadow: 0 20px 60px rgba(255, 20, 147, 0.4);">
                 <p style="font-size: 28px; font-weight: 700; margin-bottom: 15px;">
                     I love you so much! 💕
                 </p>
                 <p style="font-size: 18px; line-height: 1.8;">
-                    Thank you for making every moment special. <br>
-                    You're my favorite person in the whole world! 🌎💖<br><br>
+                    Thank you for being my everday and those moments are special. <br>
+                    You're my favorite wab wab in the whole world :3<br><br>
                     I can't wait to spend this Valentine's Day with you<br>
                     and create more beautiful memories together!
                 </p>
             </div>
             
             <p class="success-message" style="margin-top: 40px; font-size: 20px; color: #ff1493;">
-                ✨ See you on Valentine's Day, my love! ✨
+                ✨ See you on Valentine's Day, my Wabbyyy! ✨
             </p>
         </div>
     </div>
@@ -422,10 +542,40 @@
 
         createFloatingHearts();
 
-        // Move the No button randomly (far away from current position)
-        function moveButton() {
-            const noBtn = document.getElementById('noBtn');
-            const container = document.getElementById('buttonContainer');
+        // Navigate to a specific page
+        function goToPage(pageId) {
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Show the target page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Create celebration hearts
+            createCelebrationHearts();
+        }
+
+        // Create celebration hearts
+        function createCelebrationHearts() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-heart';
+                    heart.textContent = '💖';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                    document.getElementById('heartContainer').appendChild(heart);
+                    
+                    setTimeout(() => heart.remove(), 8000);
+                }, i * 100);
+            }
+        }
+
+        // Move the No button randomly
+        function moveButton(btnId, containerId) {
+            const noBtn = document.getElementById(btnId);
+            const container = document.getElementById(containerId);
             
             // Add moving class to switch to absolute positioning
             if (!noBtn.classList.contains('moving')) {
@@ -439,7 +589,7 @@
             const btnCenterX = btnRect.left - containerRect.left + btnRect.width / 2;
             const btnCenterY = btnRect.top - containerRect.top + btnRect.height / 2;
             
-            // Calculate boundaries (positions are for button center)
+            // Calculate boundaries
             const minX = btnRect.width / 2 + 10;
             const maxX = containerRect.width - btnRect.width / 2 - 10;
             const minY = btnRect.height / 2 + 10;
@@ -448,73 +598,61 @@
             let randomX, randomY;
             let attempts = 0;
             
-            // Keep generating positions until we find one far enough from current position
+            // Keep generating positions until we find one far enough
             do {
                 randomX = minX + Math.random() * (maxX - minX);
                 randomY = minY + Math.random() * (maxY - minY);
                 attempts++;
                 
-                // Calculate distance from current position
                 const distance = Math.sqrt(
                     Math.pow(randomX - btnCenterX, 2) + 
                     Math.pow(randomY - btnCenterY, 2)
                 );
                 
-                // If distance is greater than 180px or we've tried too many times, use this position
                 if (distance > 180 || attempts > 15) {
                     break;
                 }
             } while (true);
             
-            // Set position (accounting for the button being centered)
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
         }
 
-        // Show final message screen
-        function showFinalMessage() {
-            const successScreen = document.getElementById('successScreen');
-            const finalScreen = document.getElementById('finalScreen');
-            
-            successScreen.classList.remove('active');
-            finalScreen.classList.add('active');
-            
-            // Create extra celebration hearts
-            for (let i = 0; i < 40; i++) {
+        // Handle Page 1 Yes - Go to Page 3
+        function handlePage1Yes() {
+            goToPage('page3');
+        }
+
+        // Handle Page 1 No - Just increment counter, no movement
+        let page1NoClicks = 0;
+        function handlePage1No() {
+            page1NoClicks++;
+            if (page1NoClicks >= 2) {
                 setTimeout(() => {
-                    const heart = document.createElement('div');
-                    heart.className = 'floating-heart';
-                    heart.textContent = '💖';
-                    heart.style.left = Math.random() * 100 + '%';
-                    heart.style.fontSize = (Math.random() * 35 + 25) + 'px';
-                    document.getElementById('heartContainer').appendChild(heart);
-                    
-                    setTimeout(() => heart.remove(), 8000);
-                }, i * 80);
+                    goToPage('page2');
+                }, 300);
             }
         }
 
-        // Handle Yes button click
-        function handleYes() {
-            const questionScreen = document.getElementById('questionScreen');
-            const successScreen = document.getElementById('successScreen');
-            
-            questionScreen.classList.add('hidden');
-            successScreen.classList.add('active');
-            
-            // Create extra celebration hearts
-            for (let i = 0; i < 30; i++) {
+        // Handle Page 2 Yes - Go to Page 4
+        function handlePage2Yes() {
+            goToPage('page4');
+        }
+
+        // Handle Page 2 No - Just increment counter, no movement
+        let page2NoClicks = 0;
+        function handlePage2No() {
+            page2NoClicks++;
+            if (page2NoClicks >= 8) {
                 setTimeout(() => {
-                    const heart = document.createElement('div');
-                    heart.className = 'floating-heart';
-                    heart.textContent = '💖';
-                    heart.style.left = Math.random() * 100 + '%';
-                    heart.style.fontSize = (Math.random() * 30 + 20) + 'px';
-                    document.getElementById('heartContainer').appendChild(heart);
-                    
-                    setTimeout(() => heart.remove(), 8000);
-                }, i * 100);
+                    goToPage('page4');
+                }, 300);
             }
+        }
+
+        // Handle Valentine Yes - Go to Page 7
+        function handleValentineYes() {
+            goToPage('page7');
         }
     </script>
 </body>
