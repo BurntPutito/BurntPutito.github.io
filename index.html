@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio - File System</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <!-- Window Chrome -->
@@ -43,7 +43,7 @@
                 <div class="nav-item" data-section="projects">
                     <span class="nav-icon">📁</span>
                     <span class="nav-label">Projects</span>
-                    <span class="nav-count">12</span>
+                    <span class="nav-count" data-project-count></span>
                 </div>
                 <div class="nav-item" data-section="about">
                     <span class="nav-icon">👤</span>
@@ -56,37 +56,6 @@
                 <div class="nav-item" data-section="contact">
                     <span class="nav-icon">💬</span>
                     <span class="nav-label">Contact</span>
-                </div>
-            </div>
-
-            <div class="sidebar-section">
-                <div class="section-title">Collections</div>
-                <div class="nav-item" data-section="web">
-                    <span class="nav-icon">🌐</span>
-                    <span class="nav-label">Web Dev</span>
-                    <span class="nav-count">8</span>
-                </div>
-                <div class="nav-item" data-section="design">
-                    <span class="nav-icon">🎨</span>
-                    <span class="nav-label">Design</span>
-                    <span class="nav-count">5</span>
-                </div>
-                <div class="nav-item" data-section="experiments">
-                    <span class="nav-icon">🧪</span>
-                    <span class="nav-label">Experiments</span>
-                    <span class="nav-count">3</span>
-                </div>
-            </div>
-
-            <div class="sidebar-section">
-                <div class="section-title">Quick Access</div>
-                <div class="nav-item" data-section="resume">
-                    <span class="nav-icon">📄</span>
-                    <span class="nav-label">Resume</span>
-                </div>
-                <div class="nav-item" data-section="blog">
-                    <span class="nav-icon">✍️</span>
-                    <span class="nav-label">Blog</span>
                 </div>
             </div>
         </aside>
@@ -112,7 +81,7 @@
                                 <h3 class="file-title">Featured Projects</h3>
                                 <p class="file-description">Check out my latest work and creative experiments</p>
                                 <div class="file-meta">
-                                    <span class="file-tag">12 items</span>
+                                    <span class="file-tag" data-project-count="items"></span>
                                     <span class="file-tag">Recently updated</span>
                                 </div>
                             </div>
@@ -134,16 +103,6 @@
                                 <p class="file-description">Let's collaborate on something amazing</p>
                                 <div class="file-meta">
                                     <span class="file-tag">Available</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="file-card">
-                            <div class="file-card-content">
-                                <span class="file-icon">📝</span>
-                                <h3 class="file-title">Latest Blog</h3>
-                                <p class="file-description">Thoughts on design, development, and technology</p>
-                                <div class="file-meta">
-                                    <span class="file-tag">3 new posts</span>
                                 </div>
                             </div>
                         </div>
@@ -173,85 +132,8 @@
                                     <th style="width: 20%;">Status</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr class="project-row" data-project="design">
-                                    <td>
-                                        <div class="project-name-cell">
-                                            <span class="project-icon">🎨</span>
-                                            <span class="project-name">Cyberpunk Rainmeter Theme</span>
-                                        </div>
-                                    </td>
-                                    <td class="project-type">UI/UX</td>
-                                    <td class="project-date">Sep 2022</td>
-                                    <td><span class="project-status status-completed">Completed</span></td>
-                                </tr>
-                                <tr class="project-row" data-project="weather">
-                                    <td>
-                                        <div class="project-name-cell">
-                                            <span class="project-icon">📱</span>
-                                            <span class="project-name">Jackshill Remastered</span>
-                                        </div>
-                                    </td>
-                                    <td class="project-type">Mobile App</td>
-                                    <td class="project-date">Mar 2025</td>
-                                    <td><span class="project-status status-completed">Completed</span></td>
-                                </tr>
-                                <tr class="project-row" data-project="design">
-                                    <td>
-                                        <div class="project-name-cell">
-                                            <span class="project-icon">📱</span>
-                                            <span class="project-name">Lalabot Application</span>
-                                        </div>
-                                    </td>
-                                    <td class="project-type">Mobile App</td>
-                                    <td class="project-date">Sep 2025</td>
-                                    <td><span class="project-status status-completed">Completed</span></td>
-                                </tr>
-                                <tr class="project-row" data-project="game">
-                                    <td>
-                                        <div class="project-name-cell">
-                                            <span class="project-icon">🎮</span>
-                                            <span class="project-name">Behind Corridors Horror Game</span>
-                                        </div>
-                                    </td>
-                                    <td class="project-type">Game</td>
-                                    <td class="project-date">Jul 2025</td>
-                                    <td><span class="project-status status-completed">Completed</span></td>
-                                </tr>
-                                <tr class="project-row" data-project="chatbot">
-                                    <td>
-                                        <div class="project-name-cell">
-                                            <span class="project-icon">🖥️</span>
-                                            <span class="project-name">Minecraft Server Launcher</span>
-                                        </div>
-                                    </td>
-                                    <td class="project-type">Hosting Software</td>
-                                    <td class="project-date">Jan 2026</td>
-                                    <td><span class="project-status status-in-progress">Inprogress</span></td>
-                                </tr>
-                                <tr class="project-row" data-project="dataviz">
-                                    <td>
-                                        <div class="project-name-cell">
-                                            <span class="project-icon">🛠️</span>
-                                            <span class="project-name">Minecraft Full HUD Mod</span>
-                                        </div>
-                                    </td>
-                                    <td class="project-type">Game Mod</td>
-                                    <td class="project-date">Jan 2025</td>
-                                    <td><span class="project-status status-completed">Completed</span></td>
-                                </tr>
-                                <tr class="project-row" data-project="design">
-                                    <td>
-                                        <div class="project-name-cell">
-                                            <span class="project-icon">🛠️</span>
-                                            <span class="project-name">Minecraft Healthbar Mod</span>
-                                        </div>
-                                    </td>
-                                    <td class="project-type">Game Mod</td>
-                                    <td class="project-date">Jan 2025</td>
-                                    <td><span class="project-status status-completed">Completed</span></td>
-                                </tr>
-                            </tbody>
+                            <!-- Rows are rendered from js/projects.js -->
+                            <tbody></tbody>
                         </table>
                     </div>
 
@@ -299,7 +181,7 @@
                     <aside class="preview-panel active" id="about-preview">
                         <div class="preview-header">
                             <div class="preview-image">
-                                <img src="images/BurntPutito.png" alt="Mark Jaspher P. Caitan">
+                                <img src="assets/images/BurntPutito.png" alt="Mark Jaspher P. Caitan">
                             </div>
                             <div class="preview-name">Mark Jaspher P. Caitan</div>
                             <div class="preview-title">Developer</div>
@@ -333,21 +215,13 @@
                             <div class="preview-section-title">Statistics</div>
                             <div class="preview-stats">
                                 <div class="preview-stat">
-                                    <span class="preview-stat-value">6</span>
+                                    <span class="preview-stat-value" data-project-count></span>
                                     <span class="preview-stat-label">Projects</span>
                                 </div>
                                 <div class="preview-stat">
                                     <span class="preview-stat-value">5+</span>
                                     <span class="preview-stat-label">Years</span>
                                 </div>
-                                <!-- <div class="preview-stat">
-                                    <span class="preview-stat-value">50+</span>
-                                    <span class="preview-stat-label">Clients</span>
-                                </div>
-                                <div class="preview-stat">
-                                    <span class="preview-stat-value">100%</span>
-                                    <span class="preview-stat-label">Coffee</span>
-                                </div> -->
                             </div>
                         </div>
 
@@ -380,7 +254,7 @@
                 <div class="content-body">
                     <div class="about-content">
                         <div class="about-card">
-                            <h3>Pragramming Language</h3>
+                            <h3>Programming Languages</h3>
                             <div class="skill-list">
                                 <span class="skill-tag">Java</span>
                                 <span class="skill-tag">Python</span>
@@ -468,7 +342,7 @@
                     <p class="content-subtitle">Let's work together</p>
                 </div>
                 <div class="content-body">
-                    <form class="contact-form" onsubmit="return handleSubmit(event)">
+                    <form class="contact-form">
                         <div class="form-group">
                             <label class="form-label">Name</label>
                             <input type="text" class="form-input" placeholder="Your name" required>
@@ -500,7 +374,7 @@
                 <span>Online</span>
             </div>
             <div class="status-item">
-                <span>12 items</span>
+                <span data-project-count="items"></span>
             </div>
         </div>
         <div class="status-right">
@@ -513,224 +387,6 @@
         </div>
     </div>
 
-    <script>
-        // Navigation
-        const navItems = document.querySelectorAll('.nav-item');
-        const contentSections = document.querySelectorAll('.content-section');
-        const previewPanel = document.getElementById('about-preview');
-
-        navItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const section = item.dataset.section;
-                
-                // Update active nav item
-                navItems.forEach(nav => nav.classList.remove('active'));
-                item.classList.add('active');
-                
-                // Show corresponding section
-                contentSections.forEach(content => {
-                    content.classList.remove('active');
-                    if (content.id === section) {
-                        content.classList.add('active');
-                    }
-                });
-
-                // Show/hide preview panel based on section
-                if (section === 'about') {
-                    previewPanel.classList.add('active');
-                } else {
-                    previewPanel.classList.remove('active');
-                }
-
-                // Hide project preview panel when not on projects
-                const projectPreviewPanel = document.getElementById('project-preview');
-                if (section !== 'projects') {
-                    projectPreviewPanel.classList.remove('active');
-                }
-            });
-        });
-
-        // Update time
-        function updateTime() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('en-US', { 
-                hour: '2-digit', 
-                minute: '2-digit' 
-            });
-            document.getElementById('current-time').textContent = timeString;
-        }
-        updateTime();
-        setInterval(updateTime, 1000);
-
-        // Form submission
-        function handleSubmit(event) {
-            event.preventDefault();
-            alert('Message sent! (This is a demo - connect your backend to make it functional)');
-            event.target.reset();
-            return false;
-        }
-
-        // File card click handlers
-        document.querySelectorAll('.file-card').forEach(card => {
-            card.addEventListener('click', function() {
-                // Add a subtle pulse animation
-                this.style.animation = 'none';
-                setTimeout(() => {
-                    this.style.animation = '';
-                }, 10);
-            });
-        });
-
-        // Projects functionality
-        const projectRows = document.querySelectorAll('.project-row');
-        const projectPreviewPanel = document.getElementById('project-preview');
-        const projectPreviewContent = document.querySelector('.project-preview-content');
-
-        // Projects
-        const projectsData = {
-            ecommerce: {
-                image: 'images/CyberpunkPreview.png',
-                name: 'Cyberpunk Rainmeter Theme',
-                type: 'Web Application',
-                description: 'A full-featured e-commerce platform with secure payment processing, real-time inventory management, and comprehensive admin dashboard. Built with modern web technologies for optimal performance and user experience.',
-                tech: ['React', 'Node.js', 'MongoDB', 'Stripe', 'Redux', 'Express'],
-                date: 'December 2024',
-                status: 'Completed',
-                duration: '3 months',
-                platform: 'Full Stack Developer'
-            },
-            weather: {
-                icon: '📱',
-                name: 'Mobile Weather App',
-                type: 'Mobile Application',
-                description: 'Beautiful and intuitive weather forecasting application with real-time location tracking, 7-day forecasts, and interactive weather maps. Features stunning animations and a clean, modern interface.',
-                tech: ['React Native', 'Weather API', 'Redux', 'Geolocation', 'Lottie'],
-                date: 'November 2024',
-                status: 'Completed',
-                duration: '2 months',
-                platform: 'Mobile Developer'
-            },
-            game: {
-                icon: '🎮',
-                name: 'Behind Corridors Horror Game',
-                type: 'Browser Game',
-                description: 'An immersive horror game experience built entirely in the browser using Canvas API and vanilla JavaScript. Features atmospheric sound design, dynamic lighting, and engaging gameplay mechanics.',
-                tech: ['JavaScript', 'Canvas API', 'Web Audio API', 'CSS3'],
-                date: 'October 2024',
-                status: 'In Progress',
-                duration: 'Ongoing',
-                platform: 'Game Developer'
-            },
-            chatbot: {
-                icon: '🤖',
-                name: 'AI Chat Assistant',
-                type: 'AI Application',
-                description: 'Intelligent chatbot powered by natural language processing and machine learning. Capable of understanding context, maintaining conversation history, and providing helpful, human-like responses.',
-                tech: ['Python', 'TensorFlow', 'NLP', 'Flask', 'OpenAI API'],
-                date: 'September 2024',
-                status: 'Completed',
-                duration: '4 months',
-                platform: 'AI/ML Engineer'
-            },
-            dataviz: {
-                icon: '📊',
-                name: 'Data Visualization Dashboard',
-                type: 'Business Dashboard',
-                description: 'Interactive data visualization dashboard for business analytics featuring real-time charts, customizable widgets, and comprehensive reporting tools. Helps businesses make data-driven decisions.',
-                tech: ['D3.js', 'React', 'Chart.js', 'WebSocket', 'PostgreSQL'],
-                date: 'August 2024',
-                status: 'Completed',
-                duration: '2.5 months',
-                platform: 'Frontend Developer'
-            },
-            design: {
-                image: 'images/CyberpunkPreview.png',
-                name: 'Cyberpunk Rainmeter Theme',
-                type: 'UI/UX Design for Windows',
-                description: 'A sleek, futuristic Rainmeter theme inspired by cyberpunk aesthetics, featuring dynamic pixelated animations, customizable widgets (you can create your own), and a vibey neon color palette. It also comes with an optional Adventure Time mini pixelated art, with their own unique cute animation.',
-                tech: ['Rainmeter', 'Lua', 'Paint.NET', 'Scripting'],
-                date: 'September 2022',
-                status: 'Complete',
-                duration: '4 Weeks',
-                platform: 'Windows'
-            }
-        };
-
-        function showProjectPreview(projectId) {
-            const project = projectsData[projectId];
-            if (!project) return;
-
-            projectPreviewContent.innerHTML = `
-                <div class="project-preview-header">
-                    <div class="project-preview-icon">
-                        ${project.image ? `<img src="${project.image}" alt="${project.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">` : project.icon}
-                    </div>
-                    <h3 class="project-preview-title">${project.name}</h3>
-                    <p class="project-preview-type">${project.type}</p>
-                </div>
-
-                <p class="project-preview-description">${project.description}</p>
-
-                <div class="preview-divider"></div>
-
-                <div class="project-preview-section">
-                    <div class="project-preview-section-title">Technologies</div>
-                    <div class="project-tech-list">
-                        ${project.tech.map(tech => `<span class="project-tech-tag">${tech}</span>`).join('')}
-                    </div>
-                </div>
-
-                <div class="preview-divider"></div>
-
-                <div class="project-preview-section">
-                    <div class="project-preview-section-title">Project Info</div>
-                    <div class="project-info-grid">
-                        <div class="project-info-item">
-                            <div class="project-info-label">Date</div>
-                            <div class="project-info-value">${project.date.split(' ')[0]}</div>
-                        </div>
-                        <div class="project-info-item">
-                            <div class="project-info-label">Duration</div>
-                            <div class="project-info-value">${project.duration}</div>
-                        </div>
-                        <div class="project-info-item">
-                            <div class="project-info-label">Status</div>
-                            <div class="project-info-value">${project.status}</div>
-                        </div>
-                        <div class="project-info-item">
-                            <div class="project-info-label">Platform</div>
-                            <div class="project-info-value">${project.platform}</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="preview-divider"></div>
-
-                <div class="project-preview-section">
-                    <div class="project-preview-section-title">Links</div>
-                    <div class="project-links">
-                        <a href="#" class="project-link-btn">View Demo</a>
-                        <a href="https://github.com/BurntPutito/CyberpunkTheme-Rainmeter" class="project-link-btn">GitHub</a>
-                    </div>
-                </div>
-            `;
-
-            projectPreviewPanel.classList.add('active');
-        }
-
-        projectRows.forEach(row => {
-            row.addEventListener('click', function() {
-                // Remove selected class from all rows
-                projectRows.forEach(r => r.classList.remove('selected'));
-                
-                // Add selected class to clicked row
-                this.classList.add('selected');
-                
-                // Show preview for this project
-                const projectId = this.dataset.project;
-                showProjectPreview(projectId);
-            });
-        });
-    </script>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>

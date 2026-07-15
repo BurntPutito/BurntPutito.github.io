@@ -897,6 +897,20 @@ body {
     transform: translateY(-2px);
 }
 
+/* Projects with no public repo yet. Rendered as a span, so the hover
+   affordance has to be cancelled explicitly. */
+.project-link-btn.is-disabled {
+    color: var(--text-secondary);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.project-link-btn.is-disabled:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--border);
+    transform: none;
+}
+
 .project-info-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
