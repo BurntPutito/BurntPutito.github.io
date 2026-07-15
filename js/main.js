@@ -123,14 +123,28 @@ function showProjectPreview(projectId) {
     projectPreviewPanel.classList.add('active');
 }
 
-function bindProjectRows() {
-    const projectRows = document.querySelectorAll('.project-row');
+/* Which project is selected belongs to the tab, not to the page — so two tabs
+   both open on Projects can hold different selections, and switching away and
+   back restores what you had. */
+function renderProjectSelection() {
+    const selected = activeTab().selected;
 
-    projectRows.forEach(row => {
-        row.addEventListener('click', function () {
-            projectRows.forEach(r => r.classList.remove('selected'));
-            this.classList.add('selected');
-            showProjectPreview(this.dataset.project);
+    document.querySelectorAll('.project-row').forEach(row => {
+        row.classList.toggle('selected', row.dataset.project === selected);
+    });
+
+    if (selected) {
+        showProjectPreview(selected);
+    } else {
+        projectPreviewPanel.classList.remove('active');
+    }
+}
+
+function bindProjectRows() {
+    document.querySelectorAll('.project-row').forEach(row => {
+        row.addEventListener('click', () => {
+            activeTab().selected = row.dataset.project;
+            renderProjectSelection();
         });
     });
 }
@@ -151,26 +165,198 @@ const navItems = document.querySelectorAll('.nav-item');
 const contentSections = document.querySelectorAll('.content-section');
 const aboutPreviewPanel = document.getElementById('about-preview');
 
+/* The sidebar is the source of truth for each section's icon and label, so the
+   tabs and breadcrumb stay in step with it automatically. */
+const sectionMeta = {};
 navItems.forEach(item => {
-    item.addEventListener('click', () => {
-        const section = item.dataset.section;
+    sectionMeta[item.dataset.section] = {
+        icon: item.querySelector('.nav-icon').textContent,
+        label: item.querySelector('.nav-label').textContent
+    };
+});
 
-        navItems.forEach(nav => nav.classList.remove('active'));
-        item.classList.add('active');
+const HOME = 'home';
 
-        contentSections.forEach(content => {
-            content.classList.remove('active');
-            if (content.id === section) {
-                content.classList.add('active');
-            }
-        });
+function showSection(section) {
+    navItems.forEach(nav => nav.classList.toggle('active', nav.dataset.section === section));
+    contentSections.forEach(content => content.classList.toggle('active', content.id === section));
 
-        aboutPreviewPanel.classList.toggle('active', section === 'about');
+    aboutPreviewPanel.classList.toggle('active', section === 'about');
 
-        if (section !== 'projects') {
-            projectPreviewPanel.classList.remove('active');
-        }
-    });
+    if (section === 'projects') {
+        renderProjectSelection();
+    } else {
+        projectPreviewPanel.classList.remove('active');
+    }
+}
+
+/* Tabs
+
+   One tab is open by default and renames itself as you navigate — like File
+   Explorer with a single folder open. Extra tabs only appear when the visitor
+   clicks "+", and each carries its own section and its own back/forward
+   history. */
+
+const tabStrip = document.getElementById('tab-strip');
+const addressPath = document.getElementById('address-path');
+const backBtn = document.getElementById('nav-back');
+const forwardBtn = document.getElementById('nav-forward');
+const upBtn = document.getElementById('nav-up');
+
+let nextTabId = 1;
+let tabs = [];
+let activeTabId = null;
+
+function createTab(section = HOME) {
+    return { id: nextTabId++, history: [section], index: 0, selected: null };
+}
+
+function activeTab() {
+    return tabs.find(t => t.id === activeTabId);
+}
+
+function currentSection(tab = activeTab()) {
+    return tab.history[tab.index];
+}
+
+function renderTabs() {
+    const tabsHtml = tabs.map(tab => {
+        const meta = sectionMeta[currentSection(tab)];
+        return `
+            <button class="tab${tab.id === activeTabId ? ' active' : ''}" data-tab-id="${tab.id}">
+                <span class="tab-icon">${meta.icon}</span>
+                <span class="tab-label">${escapeHtml(meta.label)}</span>
+                ${tabs.length > 1 ? `
+                    <span class="tab-close" role="button" tabindex="0" title="Close tab" aria-label="Close tab">
+                        <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.2">
+                            <line x1="1" y1="1" x2="9" y2="9"/>
+                            <line x1="9" y1="1" x2="1" y2="9"/>
+                        </svg>
+                    </span>` : ''}
+            </button>
+        `;
+    }).join('');
+
+    /* The new-tab button sits inside the strip so it follows the last tab
+       rather than being pushed against the window controls. */
+    tabStrip.innerHTML = tabsHtml + `
+        <button class="tab-new" title="New tab" aria-label="New tab">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2">
+                <line x1="6" y1="2" x2="6" y2="10"/>
+                <line x1="2" y1="6" x2="10" y2="6"/>
+            </svg>
+        </button>
+    `;
+}
+
+function renderAddressBar() {
+    const tab = activeTab();
+    const section = currentSection(tab);
+
+    /* Every section is a direct child of ~, so the trail is at most two deep. */
+    const crumbs = section === HOME
+        ? [{ section: HOME, current: true }]
+        : [{ section: HOME, current: false }, { section, current: true }];
+
+    addressPath.innerHTML = crumbs.map(({ section: s, current }, i) => {
+        const meta = sectionMeta[s];
+        const label = s === HOME ? '~' : meta.label;
+        return `
+            ${i > 0 ? '<span class="address-separator">›</span>' : ''}
+            <button class="address-crumb${current ? ' is-current' : ''}" data-section="${s}"${current ? ' disabled' : ''}>
+                <span>${meta.icon}</span>
+                <span>${escapeHtml(label)}</span>
+            </button>
+        `;
+    }).join('');
+
+    backBtn.disabled = tab.index === 0;
+    forwardBtn.disabled = tab.index === tab.history.length - 1;
+    upBtn.disabled = section === HOME;
+}
+
+function render() {
+    renderTabs();
+    renderAddressBar();
+    showSection(currentSection());
+}
+
+/* Navigating pushes onto the active tab's history, dropping any forward
+   entries — the same way a browser or File Explorer behaves. */
+function navigate(section) {
+    const tab = activeTab();
+    if (currentSection(tab) === section) return;
+
+    tab.history = tab.history.slice(0, tab.index + 1);
+    tab.history.push(section);
+    tab.index = tab.history.length - 1;
+    render();
+}
+
+function openTab() {
+    const tab = createTab(HOME);
+    tabs.push(tab);
+    activeTabId = tab.id;
+    render();
+}
+
+function closeTab(id) {
+    if (tabs.length === 1) return;
+
+    const i = tabs.findIndex(t => t.id === id);
+    tabs.splice(i, 1);
+
+    if (activeTabId === id) {
+        activeTabId = tabs[Math.min(i, tabs.length - 1)].id;
+    }
+    render();
+}
+
+tabStrip.addEventListener('click', event => {
+    if (event.target.closest('.tab-new')) {
+        openTab();
+        return;
+    }
+
+    const closeBtn = event.target.closest('.tab-close');
+    if (closeBtn) {
+        event.stopPropagation();
+        closeTab(Number(closeBtn.closest('.tab').dataset.tabId));
+        return;
+    }
+
+    const tab = event.target.closest('.tab');
+    if (tab) {
+        activeTabId = Number(tab.dataset.tabId);
+        render();
+    }
+});
+
+addressPath.addEventListener('click', event => {
+    const crumb = event.target.closest('.address-crumb');
+    if (crumb && !crumb.disabled) navigate(crumb.dataset.section);
+});
+
+backBtn.addEventListener('click', () => {
+    const tab = activeTab();
+    if (tab.index > 0) {
+        tab.index--;
+        render();
+    }
+});
+
+forwardBtn.addEventListener('click', () => {
+    const tab = activeTab();
+    if (tab.index < tab.history.length - 1) {
+        tab.index++;
+        render();
+    }
+});
+
+upBtn.addEventListener('click', () => navigate(HOME));
+
+navItems.forEach(item => {
+    item.addEventListener('click', () => navigate(item.dataset.section));
 });
 
 /* Clock */
@@ -197,5 +383,10 @@ document.querySelector('.contact-form').addEventListener('submit', event => {
 renderProjectRows();
 bindProjectRows();
 renderProjectCounts();
+
+tabs = [createTab(HOME)];
+activeTabId = tabs[0].id;
+render();
+
 updateTime();
 setInterval(updateTime, 1000);

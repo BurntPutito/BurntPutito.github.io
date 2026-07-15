@@ -8,9 +8,12 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <!-- Window Chrome -->
+  <div class="window-frame">
+    <!-- Title Bar: tabs + window controls -->
     <div class="window-chrome">
-        <div class="window-title">portfolio.sys</div>
+        <div class="tab-strip" id="tab-strip">
+            <!-- Tabs and the new-tab button are rendered from js/main.js -->
+        </div>
         <div class="window-controls">
             <button class="window-button minimize" title="Minimize">
                 <svg viewBox="0 0 10 1" fill="currentColor">
@@ -28,6 +31,30 @@
                     <line x1="10" y1="0" x2="0" y2="10"/>
                 </svg>
             </button>
+        </div>
+    </div>
+
+    <!-- Address Bar -->
+    <div class="address-bar">
+        <div class="address-nav">
+            <button class="address-btn" id="nav-back" title="Back" aria-label="Back">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10 3.5 5.5 8l4.5 4.5"/>
+                </svg>
+            </button>
+            <button class="address-btn" id="nav-forward" title="Forward" aria-label="Forward">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 3.5 10.5 8 6 12.5"/>
+                </svg>
+            </button>
+            <button class="address-btn" id="nav-up" title="Up to Home" aria-label="Up to Home">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M8 12.5v-9M4 7.5 8 3.5l4 4"/>
+                </svg>
+            </button>
+        </div>
+        <div class="address-path" id="address-path">
+            <!-- Rendered from js/main.js -->
         </div>
     </div>
 
@@ -65,11 +92,6 @@
             <!-- Home Section -->
             <div class="content-section active" id="home">
                 <div class="content-header">
-                    <div class="breadcrumb">
-                        <span>~</span>
-                        <span class="breadcrumb-separator">/</span>
-                        <span>home</span>
-                    </div>
                     <h1 class="content-title">Welcome</h1>
                     <p class="content-subtitle">Explore my digital workspace</p>
                 </div>
@@ -113,11 +135,6 @@
             <!-- Projects Section -->
             <div class="content-section" id="projects">
                 <div class="content-header">
-                    <div class="breadcrumb">
-                        <span>~</span>
-                        <span class="breadcrumb-separator">/</span>
-                        <span>projects</span>
-                    </div>
                     <h1 class="content-title">Projects</h1>
                     <p class="content-subtitle">A collection of my work</p>
                 </div>
@@ -149,11 +166,6 @@
             <!-- About Section -->
             <div class="content-section" id="about">
                 <div class="content-header">
-                    <div class="breadcrumb">
-                        <span>~</span>
-                        <span class="breadcrumb-separator">/</span>
-                        <span>about</span>
-                    </div>
                     <h1 class="content-title">About Me</h1>
                     <p class="content-subtitle">Developer, Designer, Creator</p>
                 </div>
@@ -243,11 +255,6 @@
             <!-- Skills Section -->
             <div class="content-section" id="skills">
                 <div class="content-header">
-                    <div class="breadcrumb">
-                        <span>~</span>
-                        <span class="breadcrumb-separator">/</span>
-                        <span>skills</span>
-                    </div>
                     <h1 class="content-title">Skills</h1>
                     <p class="content-subtitle">Tech Stack & Tools</p>
                 </div>
@@ -333,11 +340,6 @@
             <!-- Contact Section -->
             <div class="content-section" id="contact">
                 <div class="content-header">
-                    <div class="breadcrumb">
-                        <span>~</span>
-                        <span class="breadcrumb-separator">/</span>
-                        <span>contact</span>
-                    </div>
                     <h1 class="content-title">Contact</h1>
                     <p class="content-subtitle">Let's work together</p>
                 </div>
@@ -386,6 +388,7 @@
             </div>
         </div>
     </div>
+  </div>
 
     <script type="module" src="js/main.js"></script>
 </body>

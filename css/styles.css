@@ -5,33 +5,71 @@
 }
 
 :root {
+    /* Gruvbox ramp, mapped to Windows 11 surface roles.
+       bg0_h -> titlebar & nav pane, bg0 -> content, bg1 -> hover, bg2 -> selection. */
     --bg-primary: #282828;
     --bg-secondary: #3c3836;
     --bg-sidebar: #1d2021;
+    --bg-hover: #3c3836;
+    --bg-selected: #504945;
+    --backdrop: #141617;
     --accent-primary: #fabd2f;
     --accent-secondary: #fe8019;
     --text-primary: #ebdbb2;
     --text-secondary: #a89984;
     --border: rgba(235, 219, 178, 0.1);
     --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+    /* Win11 radii */
+    --radius-window: 8px;
+    --radius-control: 4px;
 }
 
 body {
     font-family: 'JetBrains Mono', monospace;
-    background: var(--bg-primary);
     color: var(--text-primary);
     overflow: hidden;
     height: 100vh;
+    padding: 24px;
+    /* Desktop backdrop, so the window's rounded corners and shadow have
+       something to sit against. */
+    background: radial-gradient(ellipse at 50% -10%, #32302f 0%, var(--backdrop) 70%);
 }
 
-/* Window Chrome */
+/* The floating window */
+.window-frame {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-window);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    background: var(--bg-primary);
+}
+
+/* On small screens the window goes fullscreen — a maximised Win11 window has
+   square corners too, so this stays faithful and stops wasting width. */
+@media (max-width: 768px) {
+    body {
+        padding: 0;
+    }
+
+    .window-frame {
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+    }
+}
+
+/* Title Bar */
 .window-chrome {
     height: 40px;
+    flex-shrink: 0;
     background: var(--bg-sidebar);
-    border-bottom: 1px solid var(--border);
     display: flex;
-    align-items: center;
-    padding: 0 16px;
+    align-items: flex-end;
+    padding: 0 0 0 8px;
     position: relative;
     z-index: 100;
 }
@@ -40,6 +78,219 @@ body {
     display: flex;
     gap: 0;
     margin-left: auto;
+    align-self: stretch;
+}
+
+/* Tabs */
+/* The strip claims the free space so tabs can take their full width; without
+   this it shrink-wraps its content and every tab collapses to min-width. */
+.tab-strip {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 34px;
+    /* Win11 tabs hold a steady width rather than hugging the label, and only
+       shrink once the strip runs out of room. */
+    flex: 0 1 240px;
+    min-width: 110px;
+    padding: 0 8px 0 12px;
+    border: none;
+    border-radius: var(--radius-window) var(--radius-window) 0 0;
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.tab:hover {
+    background: rgba(235, 219, 178, 0.06);
+    color: var(--text-primary);
+}
+
+/* The active tab is the same colour as the address bar below it, so the two
+   read as one surface — this is what makes it look like a real tab. */
+.tab.active {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.tab-icon {
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.tab-label {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+}
+
+.tab-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    border: none;
+    border-radius: var(--radius-control);
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.15s, background 0.15s;
+}
+
+.tab:hover .tab-close,
+.tab.active .tab-close {
+    opacity: 1;
+}
+
+.tab-close:hover {
+    background: rgba(235, 219, 178, 0.15);
+}
+
+.tab-close svg {
+    width: 8px;
+    height: 8px;
+}
+
+.tab-new {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    margin: 0 0 2px 4px;
+    border: none;
+    border-radius: var(--radius-control);
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.tab-new:hover {
+    background: rgba(235, 219, 178, 0.1);
+    color: var(--text-primary);
+}
+
+.tab-new svg {
+    width: 12px;
+    height: 12px;
+}
+
+/* Address Bar */
+.address-bar {
+    height: 48px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0 12px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+}
+
+.address-nav {
+    display: flex;
+    gap: 2px;
+}
+
+.address-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: var(--radius-control);
+    background: transparent;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.address-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.address-btn:hover:not(:disabled) {
+    background: var(--bg-hover);
+}
+
+.address-btn:disabled {
+    color: var(--text-secondary);
+    opacity: 0.35;
+    cursor: default;
+}
+
+.address-path {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 32px;
+    margin-left: 8px;
+    padding: 0 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-control);
+    background: var(--bg-sidebar);
+    font-size: 12px;
+    overflow: hidden;
+}
+
+.address-crumb {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 6px;
+    border: none;
+    border-radius: 3px;
+    background: transparent;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 12px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.address-crumb:hover {
+    background: var(--bg-hover);
+}
+
+.address-crumb.is-current {
+    color: var(--text-secondary);
+    cursor: default;
+}
+
+.address-crumb.is-current:hover {
+    background: transparent;
+}
+
+.address-separator {
+    flex-shrink: 0;
+    color: var(--text-secondary);
+    opacity: 0.6;
+    font-size: 11px;
 }
 
 .window-button {
@@ -80,7 +331,8 @@ body {
 /* Main Layout */
 .container {
     display: flex;
-    height: calc(100vh - 40px);
+    flex: 1;
+    min-height: 0;
     position: relative;
 }
 
@@ -181,19 +433,6 @@ body {
     padding: 32px 48px;
     border-bottom: 1px solid var(--border);
     background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
-}
-
-.breadcrumb {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    color: var(--text-secondary);
-    margin-bottom: 16px;
-}
-
-.breadcrumb-separator {
-    opacity: 0.5;
 }
 
 .content-title {
@@ -309,6 +548,7 @@ body {
 /* Status Bar */
 .status-bar {
     height: 28px;
+    flex-shrink: 0;
     background: var(--bg-sidebar);
     border-top: 1px solid var(--border);
     display: flex;
@@ -317,10 +557,6 @@ body {
     padding: 0 16px;
     font-size: 11px;
     color: var(--text-secondary);
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
 }
 
 .status-left, .status-right {
