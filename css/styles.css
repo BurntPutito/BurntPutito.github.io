@@ -1000,7 +1000,7 @@ body {
 }
 
 .projects-table th {
-    padding: 16px 20px;
+    padding: 12px 20px;
     text-align: left;
     font-size: 11px;
     text-transform: uppercase;
@@ -1009,10 +1009,44 @@ body {
     font-weight: 600;
 }
 
+/* Sortable headers */
+.projects-table th[data-sort-key] {
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.15s, background 0.15s;
+}
+
+.projects-table th[data-sort-key]:hover {
+    color: var(--text-primary);
+    background: var(--bg-hover);
+}
+
+.projects-table th[aria-sort="ascending"],
+.projects-table th[aria-sort="descending"] {
+    color: var(--text-primary);
+}
+
+.sort-caret {
+    display: inline-block;
+    width: 0.9em;
+    margin-left: 4px;
+    font-size: 9px;
+    color: var(--accent-primary);
+    vertical-align: middle;
+}
+
+.projects-table th[aria-sort="ascending"] .sort-caret::after {
+    content: '▲';
+}
+
+.projects-table th[aria-sort="descending"] .sort-caret::after {
+    content: '▼';
+}
+
 .projects-table tbody tr {
     border-bottom: 1px solid var(--border);
     cursor: pointer;
-    transition: all 0.2s;
+    transition: background 0.15s, box-shadow 0.15s;
 }
 
 .projects-table tbody tr:last-child {
@@ -1020,12 +1054,14 @@ body {
 }
 
 .projects-table tbody tr:hover {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--bg-hover);
 }
 
+/* Inset bar rather than a left border, so the accent doesn't nudge the row's
+   content sideways when it becomes selected. */
 .projects-table tbody tr.selected {
-    background: rgba(250, 189, 47, 0.1);
-    border-left: 3px solid var(--accent-primary);
+    background: var(--bg-selected);
+    box-shadow: inset 3px 0 0 var(--accent-primary);
 }
 
 .projects-table td {

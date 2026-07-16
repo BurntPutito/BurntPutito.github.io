@@ -28,8 +28,41 @@ function projectTypes() {
     return [...counts.entries()].sort(([a], [b]) => a.localeCompare(b));
 }
 
+/* Sorting the details view. `date` is a display string ("Sep 2022") and
+   `status` is ranked by how live the work is, so both need a sort key rather
+   than raw string comparison. */
+const MONTHS = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
+const STATUS_RANK = { 'in-progress': 0, 'completed': 1, 'planned': 2 };
+
+function sortValue(project, key) {
+    switch (key) {
+        case 'name': return project.name.toLowerCase();
+        case 'type': return project.type.toLowerCase();
+        case 'date': {
+            const [month, year] = project.date.split(' ');
+            return Number(year) * 12 + (MONTHS[month] ?? 0);
+        }
+        case 'status': return STATUS_RANK[project.status] ?? 99;
+        default: return 0;
+    }
+}
+
+function sortProjects(list, sort) {
+    if (!sort) return list;
+
+    const factor = sort.dir === 'asc' ? 1 : -1;
+    return [...list].sort((a, b) => {
+        const va = sortValue(a, sort.key);
+        const vb = sortValue(b, sort.key);
+        if (va < vb) return -factor;
+        if (va > vb) return factor;
+        return 0;
+    });
+}
+
 function renderProjectRows() {
-    projectsTableBody.innerHTML = visibleProjects().map(project => `
+    const rows = sortProjects(visibleProjects(), activeTab().sort);
+    projectsTableBody.innerHTML = rows.map(project => `
         <tr class="project-row" data-project="${project.id}">
             <td>
                 <div class="project-name-cell">
@@ -229,6 +262,7 @@ function showLocation({ section, filter }) {
 
     if (section === 'projects') {
         renderProjectRows();
+        renderSortHeaders();
         renderProjectsHeading(filter);
 
         /* A selection that the current filter hides is no longer a selection. */
@@ -243,6 +277,35 @@ function showLocation({ section, filter }) {
 
     renderViewCount();
 }
+
+/* Details View: sortable columns */
+
+const sortHeaders = document.querySelectorAll('.projects-table th[data-sort-key]');
+
+function renderSortHeaders() {
+    const sort = activeTab().sort;
+    sortHeaders.forEach(th => {
+        const active = sort && sort.key === th.dataset.sortKey;
+        th.setAttribute('aria-sort', active ? (sort.dir === 'asc' ? 'ascending' : 'descending') : 'none');
+    });
+}
+
+document.querySelector('.projects-table thead').addEventListener('click', event => {
+    const th = event.target.closest('th[data-sort-key]');
+    if (!th) return;
+
+    const key = th.dataset.sortKey;
+    const sort = activeTab().sort;
+
+    /* First click sorts ascending; clicking the active column flips direction. */
+    activeTab().sort = (sort && sort.key === key)
+        ? { key, dir: sort.dir === 'asc' ? 'desc' : 'asc' }
+        : { key, dir: 'asc' };
+
+    renderProjectRows();
+    renderSortHeaders();
+    renderProjectSelection();
+});
 
 /* The heading follows the filter, so a short list reads as "you are in Game
    Mod" rather than "Projects, apparently missing most of its projects". */
@@ -273,9 +336,11 @@ let tabs = [];
 let activeTabId = null;
 
 /* A location is a section plus an optional project-type filter. Tab history is
-   a list of these, so Back/Forward step through filters too. */
+   a list of these, so Back/Forward step through filters too. `selected` and
+   `sort` are the tab's own view state, so two tabs on Projects stay
+   independent. */
 function createTab(section = HOME) {
-    return { id: nextTabId++, history: [{ section, filter: null }], index: 0, selected: null };
+    return { id: nextTabId++, history: [{ section, filter: null }], index: 0, selected: null, sort: null };
 }
 
 function activeTab() {

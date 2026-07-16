@@ -98,7 +98,7 @@ Fixed in Pass 2, no longer issues: the green→yellow accent migration is comple
 
 Worth understanding before touching `js/main.js`, because it's the spine of the UI.
 
-A **location** is `{ section, filter }` — a section id, plus an optional project *type* to filter by. A **tab** owns a history of locations, an index into it, and its own selected project. So Back/Forward step through filters as well as sections, and two tabs open on Projects can show different types and different selections.
+A **location** is `{ section, filter }` — a section id, plus an optional project *type* to filter by. A **tab** owns a history of locations, an index into it, its own selected project, and its own column sort. So Back/Forward step through filters as well as sections, and two tabs open on Projects can show different types, selections, and sort orders.
 
 Tab behaviour deliberately mirrors File Explorer: one tab is open by default and **renames itself** as you navigate; new tabs appear **only** via `+`; the close button is only rendered when more than one tab exists. `Up` walks the real hierarchy — a filter's parent is Projects, a section's parent is `~`.
 
@@ -114,8 +114,8 @@ When a filter is active the Projects heading becomes the filter's name and the s
 
 - ✅ **2.1 Window chrome** — tabs, address bar, floating window. Shipped together because the active tab needs the address bar beneath it to read as a tab.
 - ✅ **2.2 Nav pane** — chevron groups, Quick access, Projects as an expandable folder, type filters, selection pill. Green migration finished here.
-- ⬜ **2.3 Details view** — sortable column headers, Win11 hover/selection states. Edits the row template in `renderProjectRows()` once; all rows follow.
+- ✅ **2.3 Details view** — sortable column headers (click to sort, click again to flip), Win11 hover/selection. Sort lives on the tab; `date` sorts chronologically via a `MMM YYYY` parse, `status` by a liveness rank.
 
-Open question, deferred to visual review: emoji icons vs. Fluent line icons (inline SVG — no CDN, keep the no-build constraint).
+With all three elements in, Pass 2's core is done. Open question still deferred to visual review: emoji icons vs. Fluent line icons (inline SVG — no CDN, keep the no-build constraint). The remaining known issues below (mobile, SEO, real anchors) were always scoped as a later pass.
 
 Blocked on Mark, not on code: Resume section (needs a resume PDF), Blog section (needs posts).
