@@ -12,8 +12,24 @@ function escapeHtml(value) {
 
 const projectsTableBody = document.querySelector('.projects-table tbody');
 
+/* The projects on screen right now — everything when unfiltered, or one type
+   when a filter is picked in the nav pane. */
+function visibleProjects() {
+    const { filter } = currentLocation();
+    return filter ? projects.filter(p => p.type === filter) : projects;
+}
+
+/* Distinct types with counts, derived from the data rather than maintained by
+   hand — add a project with a new type and its filter appears on its own.
+   Sorted alphabetically, the way a folder listing is. */
+function projectTypes() {
+    const counts = new Map();
+    projects.forEach(p => counts.set(p.type, (counts.get(p.type) || 0) + 1));
+    return [...counts.entries()].sort(([a], [b]) => a.localeCompare(b));
+}
+
 function renderProjectRows() {
-    projectsTableBody.innerHTML = projects.map(project => `
+    projectsTableBody.innerHTML = visibleProjects().map(project => `
         <tr class="project-row" data-project="${project.id}">
             <td>
                 <div class="project-name-cell">
@@ -140,17 +156,18 @@ function renderProjectSelection() {
     }
 }
 
-function bindProjectRows() {
-    document.querySelectorAll('.project-row').forEach(row => {
-        row.addEventListener('click', () => {
-            activeTab().selected = row.dataset.project;
-            renderProjectSelection();
-        });
-    });
-}
+/* Delegated, because the rows are re-rendered whenever the filter changes. */
+projectsTableBody.addEventListener('click', event => {
+    const row = event.target.closest('.project-row');
+    if (!row) return;
+
+    activeTab().selected = row.dataset.project;
+    renderProjectSelection();
+});
 
 /* Counts */
 
+/* Totals — the sidebar folder, the home card, the About stat. */
 function renderProjectCounts() {
     document.querySelectorAll('[data-project-count]').forEach(el => {
         el.textContent = el.dataset.projectCount === 'items'
@@ -159,16 +176,26 @@ function renderProjectCounts() {
     });
 }
 
+/* The status bar counts what's in the current view, like File Explorer. */
+function renderViewCount() {
+    const count = visibleProjects().length;
+    document.querySelector('[data-view-count]').textContent =
+        `${count} item${count === 1 ? '' : 's'}`;
+}
+
 /* Navigation */
 
-const navItems = document.querySelectorAll('.nav-item');
+const navPane = document.getElementById('nav-pane');
+const projectFilters = document.getElementById('project-filters');
+const projectsTitle = document.getElementById('projects-title');
+const projectsSubtitle = document.getElementById('projects-subtitle');
 const contentSections = document.querySelectorAll('.content-section');
 const aboutPreviewPanel = document.getElementById('about-preview');
 
-/* The sidebar is the source of truth for each section's icon and label, so the
+/* The nav pane is the source of truth for each section's icon and label, so the
    tabs and breadcrumb stay in step with it automatically. */
 const sectionMeta = {};
-navItems.forEach(item => {
+navPane.querySelectorAll('.nav-item[data-section]').forEach(item => {
     sectionMeta[item.dataset.section] = {
         icon: item.querySelector('.nav-icon').textContent,
         label: item.querySelector('.nav-label').textContent
@@ -176,18 +203,56 @@ navItems.forEach(item => {
 });
 
 const HOME = 'home';
+const FOLDER_ICON = '📁';
 
-function showSection(section) {
-    navItems.forEach(nav => nav.classList.toggle('active', nav.dataset.section === section));
+function renderProjectFilters() {
+    projectFilters.innerHTML = projectTypes().map(([type, count]) => `
+        <div class="nav-item" data-filter="${escapeHtml(type)}">
+            <span class="nav-icon">${FOLDER_ICON}</span>
+            <span class="nav-label">${escapeHtml(type)}</span>
+            <span class="nav-count">${count}</span>
+        </div>
+    `).join('');
+}
+
+function showLocation({ section, filter }) {
+    /* A filter selects its own folder, not the parent — same as File Explorer,
+       where opening a subfolder deselects the one above it. */
+    navPane.querySelectorAll('.nav-item').forEach(item => {
+        const isSection = item.dataset.section === section && !filter;
+        const isFilter = Boolean(filter) && item.dataset.filter === filter;
+        item.classList.toggle('active', isSection || isFilter);
+    });
+
     contentSections.forEach(content => content.classList.toggle('active', content.id === section));
-
     aboutPreviewPanel.classList.toggle('active', section === 'about');
 
     if (section === 'projects') {
+        renderProjectRows();
+        renderProjectsHeading(filter);
+
+        /* A selection that the current filter hides is no longer a selection. */
+        const tab = activeTab();
+        if (tab.selected && !visibleProjects().some(p => p.id === tab.selected)) {
+            tab.selected = null;
+        }
         renderProjectSelection();
     } else {
         projectPreviewPanel.classList.remove('active');
     }
+
+    renderViewCount();
+}
+
+/* The heading follows the filter, so a short list reads as "you are in Game
+   Mod" rather than "Projects, apparently missing most of its projects". */
+function renderProjectsHeading(filter) {
+    const count = visibleProjects().length;
+
+    projectsTitle.textContent = filter || 'Projects';
+    projectsSubtitle.textContent = filter
+        ? `${count} ${count === 1 ? 'project' : 'projects'}`
+        : 'A collection of my work';
 }
 
 /* Tabs
@@ -207,21 +272,30 @@ let nextTabId = 1;
 let tabs = [];
 let activeTabId = null;
 
+/* A location is a section plus an optional project-type filter. Tab history is
+   a list of these, so Back/Forward step through filters too. */
 function createTab(section = HOME) {
-    return { id: nextTabId++, history: [section], index: 0, selected: null };
+    return { id: nextTabId++, history: [{ section, filter: null }], index: 0, selected: null };
 }
 
 function activeTab() {
     return tabs.find(t => t.id === activeTabId);
 }
 
-function currentSection(tab = activeTab()) {
+function currentLocation(tab = activeTab()) {
     return tab.history[tab.index];
+}
+
+/* A tab is named after the folder it's showing — the filter when there is one. */
+function locationMeta({ section, filter }) {
+    return filter
+        ? { icon: FOLDER_ICON, label: filter }
+        : sectionMeta[section];
 }
 
 function renderTabs() {
     const tabsHtml = tabs.map(tab => {
-        const meta = sectionMeta[currentSection(tab)];
+        const meta = locationMeta(currentLocation(tab));
         return `
             <button class="tab${tab.id === activeTabId ? ' active' : ''}" data-tab-id="${tab.id}">
                 <span class="tab-icon">${meta.icon}</span>
@@ -249,46 +323,58 @@ function renderTabs() {
     `;
 }
 
+/* The trail to a location: ~ › Projects › Game Mod at its deepest. */
+function crumbsFor({ section, filter }) {
+    const crumbs = [{ icon: sectionMeta[HOME].icon, label: '~', section: HOME, filter: null }];
+
+    if (section !== HOME) {
+        crumbs.push({ ...sectionMeta[section], section, filter: null });
+    }
+    if (filter) {
+        crumbs.push({ icon: FOLDER_ICON, label: filter, section, filter });
+    }
+    return crumbs;
+}
+
 function renderAddressBar() {
     const tab = activeTab();
-    const section = currentSection(tab);
+    const location = currentLocation(tab);
+    const crumbs = crumbsFor(location);
 
-    /* Every section is a direct child of ~, so the trail is at most two deep. */
-    const crumbs = section === HOME
-        ? [{ section: HOME, current: true }]
-        : [{ section: HOME, current: false }, { section, current: true }];
-
-    addressPath.innerHTML = crumbs.map(({ section: s, current }, i) => {
-        const meta = sectionMeta[s];
-        const label = s === HOME ? '~' : meta.label;
+    addressPath.innerHTML = crumbs.map((crumb, i) => {
+        const current = i === crumbs.length - 1;
         return `
             ${i > 0 ? '<span class="address-separator">›</span>' : ''}
-            <button class="address-crumb${current ? ' is-current' : ''}" data-section="${s}"${current ? ' disabled' : ''}>
-                <span>${meta.icon}</span>
-                <span>${escapeHtml(label)}</span>
+            <button class="address-crumb${current ? ' is-current' : ''}"
+                    data-section="${crumb.section}"
+                    data-filter="${crumb.filter ? escapeHtml(crumb.filter) : ''}"
+                    ${current ? 'disabled' : ''}>
+                <span>${crumb.icon}</span>
+                <span>${escapeHtml(crumb.label)}</span>
             </button>
         `;
     }).join('');
 
     backBtn.disabled = tab.index === 0;
     forwardBtn.disabled = tab.index === tab.history.length - 1;
-    upBtn.disabled = section === HOME;
+    upBtn.disabled = location.section === HOME;
 }
 
 function render() {
     renderTabs();
     renderAddressBar();
-    showSection(currentSection());
+    showLocation(currentLocation());
 }
 
 /* Navigating pushes onto the active tab's history, dropping any forward
    entries — the same way a browser or File Explorer behaves. */
-function navigate(section) {
+function navigate(section, filter = null) {
     const tab = activeTab();
-    if (currentSection(tab) === section) return;
+    const location = currentLocation(tab);
+    if (location.section === section && location.filter === filter) return;
 
     tab.history = tab.history.slice(0, tab.index + 1);
-    tab.history.push(section);
+    tab.history.push({ section, filter });
     tab.index = tab.history.length - 1;
     render();
 }
@@ -334,7 +420,9 @@ tabStrip.addEventListener('click', event => {
 
 addressPath.addEventListener('click', event => {
     const crumb = event.target.closest('.address-crumb');
-    if (crumb && !crumb.disabled) navigate(crumb.dataset.section);
+    if (crumb && !crumb.disabled) {
+        navigate(crumb.dataset.section, crumb.dataset.filter || null);
+    }
 });
 
 backBtn.addEventListener('click', () => {
@@ -353,11 +441,46 @@ forwardBtn.addEventListener('click', () => {
     }
 });
 
-upBtn.addEventListener('click', () => navigate(HOME));
-
-navItems.forEach(item => {
-    item.addEventListener('click', () => navigate(item.dataset.section));
+/* Up goes to the parent folder: a type filter sits inside Projects, and every
+   section sits inside ~. */
+upBtn.addEventListener('click', () => {
+    const { section, filter } = currentLocation();
+    if (filter) navigate(section, null);
+    else navigate(HOME);
 });
+
+navPane.addEventListener('click', event => {
+    const chevron = event.target.closest('.nav-chevron');
+    if (chevron) {
+        toggleGroup(chevron.closest('.nav-group'));
+        return;
+    }
+
+    const item = event.target.closest('.nav-item');
+    if (!item) return;
+
+    if (item.dataset.section) {
+        navigate(item.dataset.section, null);
+    } else if (item.dataset.filter) {
+        navigate('projects', item.dataset.filter);
+    } else {
+        /* A group header (Quick access) is a label, so clicking it just folds
+           the group rather than going nowhere. */
+        toggleGroup(item.closest('.nav-group'));
+    }
+});
+
+function toggleGroup(group) {
+    if (!group) return;
+
+    const collapsed = group.hasAttribute('data-collapsed');
+    group.toggleAttribute('data-collapsed', !collapsed);
+
+    const chevron = group.querySelector('.nav-chevron');
+    const name = group.querySelector('.nav-label').textContent;
+    chevron.setAttribute('aria-expanded', String(collapsed));
+    chevron.setAttribute('aria-label', `${collapsed ? 'Collapse' : 'Expand'} ${name}`);
+}
 
 /* Clock */
 
@@ -380,8 +503,7 @@ document.querySelector('.contact-form').addEventListener('submit', event => {
 
 /* Init */
 
-renderProjectRows();
-bindProjectRows();
+renderProjectFilters();
 renderProjectCounts();
 
 tabs = [createTab(HOME)];

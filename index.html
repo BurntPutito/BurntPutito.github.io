@@ -59,32 +59,65 @@
     </div>
 
     <div class="container">
-        <!-- Sidebar -->
+        <!-- Navigation Pane -->
         <aside class="sidebar">
-            <div class="sidebar-section">
-                <div class="section-title">Navigation</div>
-                <div class="nav-item active" data-section="home">
-                    <span class="nav-icon">🏠</span>
-                    <span class="nav-label">Home</span>
+            <nav class="nav-pane" id="nav-pane">
+                <div class="nav-row">
+                    <span class="nav-chevron-spacer"></span>
+                    <div class="nav-item" data-section="home">
+                        <span class="nav-icon">🏠</span>
+                        <span class="nav-label">Home</span>
+                    </div>
                 </div>
-                <div class="nav-item" data-section="projects">
-                    <span class="nav-icon">📁</span>
-                    <span class="nav-label">Projects</span>
-                    <span class="nav-count" data-project-count></span>
+
+                <!-- Quick access: a group header, not a destination -->
+                <div class="nav-group" data-group="quick">
+                    <div class="nav-row">
+                        <button class="nav-chevron" aria-expanded="true" aria-label="Collapse Quick access">
+                            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 2.5 7.5 6 4 9.5"/>
+                            </svg>
+                        </button>
+                        <div class="nav-item nav-item-header">
+                            <span class="nav-icon">📌</span>
+                            <span class="nav-label">Quick access</span>
+                        </div>
+                    </div>
+                    <div class="nav-children">
+                        <div class="nav-item" data-section="about">
+                            <span class="nav-icon">👤</span>
+                            <span class="nav-label">About Me</span>
+                        </div>
+                        <div class="nav-item" data-section="skills">
+                            <span class="nav-icon">⚡</span>
+                            <span class="nav-label">Skills</span>
+                        </div>
+                        <div class="nav-item" data-section="contact">
+                            <span class="nav-icon">💬</span>
+                            <span class="nav-label">Contact</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="nav-item" data-section="about">
-                    <span class="nav-icon">👤</span>
-                    <span class="nav-label">About Me</span>
+
+                <!-- Projects: clickable folder, and expandable into its types -->
+                <div class="nav-group" data-group="projects">
+                    <div class="nav-row">
+                        <button class="nav-chevron" aria-expanded="true" aria-label="Collapse Projects">
+                            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 2.5 7.5 6 4 9.5"/>
+                            </svg>
+                        </button>
+                        <div class="nav-item" data-section="projects">
+                            <span class="nav-icon">📁</span>
+                            <span class="nav-label">Projects</span>
+                            <span class="nav-count" data-project-count></span>
+                        </div>
+                    </div>
+                    <div class="nav-children" id="project-filters">
+                        <!-- Type filters are rendered from js/main.js -->
+                    </div>
                 </div>
-                <div class="nav-item" data-section="skills">
-                    <span class="nav-icon">⚡</span>
-                    <span class="nav-label">Skills</span>
-                </div>
-                <div class="nav-item" data-section="contact">
-                    <span class="nav-icon">💬</span>
-                    <span class="nav-label">Contact</span>
-                </div>
-            </div>
+            </nav>
         </aside>
 
         <!-- Main Content -->
@@ -135,8 +168,8 @@
             <!-- Projects Section -->
             <div class="content-section" id="projects">
                 <div class="content-header">
-                    <h1 class="content-title">Projects</h1>
-                    <p class="content-subtitle">A collection of my work</p>
+                    <h1 class="content-title" id="projects-title">Projects</h1>
+                    <p class="content-subtitle" id="projects-subtitle">A collection of my work</p>
                 </div>
                 <div class="content-body content-body-with-preview">
                     <div class="projects-list">
@@ -376,7 +409,7 @@
                 <span>Online</span>
             </div>
             <div class="status-item">
-                <span data-project-count="items"></span>
+                <span data-view-count></span>
             </div>
         </div>
         <div class="status-right">

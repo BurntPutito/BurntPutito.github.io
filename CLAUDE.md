@@ -84,17 +84,38 @@ Gruvbox dark palette. Win11 surface roles map onto the gruvbox ramp: `bg0_h #1d2
 
 Don't rediscover these as new findings:
 
-- **Half-finished accent migration.** The palette moved from green to gruvbox yellow, but dead `rgba(0, 255, 136, ...)` values survive in `.nav-item.active`, `.skill-tag` background and border, and `.form-button:hover`. Two accent colors are fighting.
 - **The mobile preview-panel hide doesn't work.** `@media (max-width: 768px) { .preview-panel { display: none } }` (specificity 0,1,0) loses to `.preview-panel.active { display: block }` (0,2,0). Media queries add no specificity.
-- **Barely responsive.** One `@media (max-width: 768px)` block. No mobile nav pattern; `.project-preview-panel` has a 400px min-width and is never hidden, so `#projects` overflows on phones.
-- **Dead CSS**: `.projects-container` and `.status-planned` are defined but never used.
-- **No SEO.** No description, Open Graph, Twitter card, canonical, or favicon. Title is the generic "Portfolio - File System". Content only renders after JS runs, so crawlers see one section.
+- **Barely responsive.** No mobile nav pattern; `.project-preview-panel` has a 400px min-width and is never hidden, so `#projects` overflows on phones. The window does go fullscreen under 768px.
+- **Dead CSS**: `.projects-container` is defined but never used. (`.status-planned` is *not* dead — it's waiting for a project with `status: 'planned'`.)
+- **No SEO.** No description, Open Graph, Twitter card, canonical, or favicon — the missing favicon is the one 404 in the console. Title is the generic "Portfolio - File System". Content only renders after JS runs, so crawlers see one section.
 - **Nav items are `<div>`, not links.** No keyboard focus, no href, no URL per section, no deep-linking. Sections are `<div>`, not `<section>`. Form labels lack `for`/`id` association.
 - **Contact form is a demo.** `alert()`s and resets; no backend.
-- **Window chrome buttons are decorative.** Minimize/maximize/close have no handlers.
+- **Window chrome buttons are decorative.** Minimize/maximize/close have no handlers. (Tabs, `+`, close-tab, back/forward/up and the breadcrumb all genuinely work.)
+
+Fixed in Pass 2, no longer issues: the green→yellow accent migration is complete (no `rgba(0, 255, 136, ...)` remains anywhere); the status bar no longer overlaps content since it left `position: fixed`.
+
+## Navigation model
+
+Worth understanding before touching `js/main.js`, because it's the spine of the UI.
+
+A **location** is `{ section, filter }` — a section id, plus an optional project *type* to filter by. A **tab** owns a history of locations, an index into it, and its own selected project. So Back/Forward step through filters as well as sections, and two tabs open on Projects can show different types and different selections.
+
+Tab behaviour deliberately mirrors File Explorer: one tab is open by default and **renames itself** as you navigate; new tabs appear **only** via `+`; the close button is only rendered when more than one tab exists. `Up` walks the real hierarchy — a filter's parent is Projects, a section's parent is `~`.
+
+The nav pane's type filters are **derived from the data**: `projectTypes()` reads distinct `type` values off `projects` with counts. Add a project with a new type and its filter appears on its own, correctly counted. Never hardcode the category list.
+
+When a filter is active the Projects heading becomes the filter's name and the subtitle becomes its count, so a short list reads as "you are in Game Mod" rather than "Projects, apparently missing most of its projects".
+
+`sectionMeta` is read out of the nav pane DOM at startup, so a section's icon and label are defined once in `index.html` and reused by the tabs and breadcrumb.
 
 ## Planned next
 
-**Pass 2 — Windows 11 File Explorer redesign in gruvbox.** Purely visual, iterative, reviewed on sight. In order: window chrome + tabs, nav pane (Win11 structure, and Collections return as real filters over the `type` field), command bar + breadcrumb address bar, details view with sortable columns. The green→yellow accent cleanup happens here, since these rules get rewritten anyway. Open question: emoji icons vs. Fluent line icons (inline SVG — no CDN, keep the no-build constraint).
+**Pass 2 — Windows 11 File Explorer redesign in gruvbox.** Iterative, reviewed on sight.
+
+- ✅ **2.1 Window chrome** — tabs, address bar, floating window. Shipped together because the active tab needs the address bar beneath it to read as a tab.
+- ✅ **2.2 Nav pane** — chevron groups, Quick access, Projects as an expandable folder, type filters, selection pill. Green migration finished here.
+- ⬜ **2.3 Details view** — sortable column headers, Win11 hover/selection states. Edits the row template in `renderProjectRows()` once; all rows follow.
+
+Open question, deferred to visual review: emoji icons vs. Fluent line icons (inline SVG — no CDN, keep the no-build constraint).
 
 Blocked on Mark, not on code: Resume section (needs a resume PDF), Blog section (needs posts).
