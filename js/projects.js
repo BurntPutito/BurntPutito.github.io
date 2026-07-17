@@ -8,7 +8,8 @@
  * Fields:
  *   id          Stable kebab-case key. Used for DOM lookups; don't reuse or rename casually.
  *   name        Display name.
- *   icon        Emoji shown in the table row and as the preview fallback when `image` is null.
+ *   icon        Name of a Fluent icon in js/icons.js (e.g. 'game', 'phone'), shown
+ *               in the table row and as the preview fallback when `image` is null.
  *   type        Short label for the table's Type column.
  *   date        Display date, e.g. 'Sep 2022'.
  *   status      'completed' | 'in-progress' | 'planned'. Drives the .status-* CSS class.
@@ -27,7 +28,7 @@ export const projects = [
     {
         id: 'cyberpunk-rainmeter',
         name: 'Cyberpunk Rainmeter Theme',
-        icon: '🎨',
+        icon: 'palette',
         type: 'UI/UX',
         date: 'Sep 2022',
         status: 'completed',
@@ -43,7 +44,7 @@ export const projects = [
     {
         id: 'jackshill-remastered',
         name: 'Jackshill Remastered',
-        icon: '📱',
+        icon: 'phone',
         type: 'Mobile App',
         date: 'Mar 2025',
         status: 'completed',
@@ -59,7 +60,7 @@ export const projects = [
     {
         id: 'lalabot',
         name: 'Lalabot Application',
-        icon: '📱',
+        icon: 'phone',
         type: 'Mobile App',
         date: 'Sep 2025',
         status: 'completed',
@@ -75,7 +76,7 @@ export const projects = [
     {
         id: 'behind-corridors',
         name: 'Behind Corridors Horror Game',
-        icon: '🎮',
+        icon: 'game',
         type: 'Game',
         date: 'Jul 2025',
         status: 'completed',
@@ -91,7 +92,7 @@ export const projects = [
     {
         id: 'minecraft-server-launcher',
         name: 'Minecraft Server Launcher',
-        icon: '🖥️',
+        icon: 'server',
         type: 'Hosting Software',
         date: 'Jan 2026',
         status: 'in-progress',
@@ -107,7 +108,7 @@ export const projects = [
     {
         id: 'minecraft-hud',
         name: 'Minecraft Full HUD Mod',
-        icon: '🛠️',
+        icon: 'wrench',
         type: 'Game Mod',
         date: 'Jan 2025',
         status: 'completed',
@@ -127,7 +128,7 @@ export const projects = [
         // Renamed from "Minecraft Healthbar Mod" — this is a Left 4 Dead 2 addon
         // styled to look like Minecraft, not a Minecraft mod.
         name: 'Minecraft-Style Healthbar (L4D2)',
-        icon: '🛠️',
+        icon: 'wrench',
         type: 'Game Mod',
         date: 'Jan 2025',
         status: 'completed',
@@ -143,7 +144,7 @@ export const projects = [
     {
         id: 'roll-a-ball',
         name: 'Roll A Ball',
-        icon: '🎮',
+        icon: 'game',
         type: 'Game',
         date: 'Jun 2025',
         status: 'completed',

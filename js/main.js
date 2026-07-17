@@ -1,4 +1,14 @@
 import { projects, statusLabels } from './projects.js';
+import { icon } from './icons.js';
+
+/* Fill every static [data-icon] hook (nav, home cards, social) with its SVG.
+   Runs before anything reads the nav DOM, so sectionMeta picks up real icons. */
+function hydrateIcons() {
+    document.querySelectorAll('[data-icon]').forEach(el => {
+        el.innerHTML = icon(el.dataset.icon);
+    });
+}
+hydrateIcons();
 
 /* Escape values before they reach innerHTML, so a description containing
    characters like < or & renders as text instead of breaking the markup. */
@@ -66,7 +76,7 @@ function renderProjectRows() {
         <tr class="project-row" data-project="${project.id}">
             <td>
                 <div class="project-name-cell">
-                    <span class="project-icon">${project.icon}</span>
+                    <span class="project-icon">${icon(project.icon)}</span>
                     <span class="project-name">${escapeHtml(project.name)}</span>
                 </div>
             </td>
@@ -127,7 +137,7 @@ function showProjectPreview(projectId) {
             <div class="project-preview-icon">
                 ${project.image
                     ? `<img src="${project.image}" alt="${escapeHtml(project.name)}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">`
-                    : project.icon}
+                    : icon(project.icon)}
             </div>
             <h3 class="project-preview-title">${escapeHtml(project.name)}</h3>
             <p class="project-preview-type">${escapeHtml(project.type)}</p>
@@ -230,13 +240,13 @@ const aboutPreviewPanel = document.getElementById('about-preview');
 const sectionMeta = {};
 navPane.querySelectorAll('.nav-item[data-section]').forEach(item => {
     sectionMeta[item.dataset.section] = {
-        icon: item.querySelector('.nav-icon').textContent,
+        icon: item.querySelector('.nav-icon').innerHTML,
         label: item.querySelector('.nav-label').textContent
     };
 });
 
 const HOME = 'home';
-const FOLDER_ICON = '📁';
+const FOLDER_ICON = icon('folder');
 
 function renderProjectFilters() {
     projectFilters.innerHTML = projectTypes().map(([type, count]) => `

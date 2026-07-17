@@ -126,8 +126,13 @@ body {
 }
 
 .tab-icon {
-    font-size: 12px;
+    display: flex;
     flex-shrink: 0;
+}
+
+.tab-icon svg {
+    width: 15px;
+    height: 15px;
 }
 
 .tab-label {
@@ -273,6 +278,11 @@ body {
     transition: background 0.15s;
 }
 
+.address-crumb svg {
+    width: 15px;
+    height: 15px;
+}
+
 .address-crumb:hover {
     background: var(--bg-hover);
 }
@@ -406,9 +416,9 @@ body {
     gap: 4px;
     margin-top: 4px;
     /* Chevron (24) + gap (2) only draws children level with the parent's icon,
-       which reads as a flat list. The extra 14px steps them in so the nesting
-       is visible. */
-    padding-left: 40px;
+       which reads as a flat list. The extra steps them in so the nesting is
+       visible, while leaving room for the longest label ("Hosting Software"). */
+    padding-left: 36px;
 }
 
 .nav-group[data-collapsed] .nav-children {
@@ -462,13 +472,24 @@ body {
 }
 
 .nav-icon {
-    width: 16px;
-    margin-right: 10px;
+    width: 18px;
+    margin-right: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 13px;
     flex-shrink: 0;
+    color: var(--text-secondary);
+}
+
+.nav-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* The selected row and Projects folder pull their icon up to full contrast. */
+.nav-item.active .nav-icon,
+.nav-item[data-section="projects"] .nav-icon {
+    color: var(--accent-primary);
 }
 
 .nav-label {
@@ -577,9 +598,14 @@ body {
 }
 
 .file-icon {
-    font-size: 40px;
-    margin-bottom: 16px;
     display: block;
+    margin-bottom: 16px;
+    color: var(--accent-primary);
+}
+
+.file-icon svg {
+    width: 42px;
+    height: 42px;
 }
 
 .file-title {
@@ -959,12 +985,17 @@ body {
     border: 1px solid var(--border);
     border-radius: 6px;
     color: var(--text-primary);
-    text-align: center;
     cursor: pointer;
     transition: all 0.2s;
-    font-size: 18px;
     text-decoration: none;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.preview-social-btn svg {
+    width: 20px;
+    height: 20px;
 }
 
 .preview-social-btn:hover {
@@ -1077,10 +1108,15 @@ body {
 }
 
 .project-icon {
-    font-size: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: var(--accent-primary);
+}
+
+.project-icon svg {
+    width: 24px;
+    height: 24px;
 }
 
 .project-name {
@@ -1153,9 +1189,16 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 80px;
     margin-bottom: 20px;
     border: 3px solid var(--border);
+    /* Dark icon on the bright gradient panel. */
+    color: var(--bg-sidebar);
+}
+
+.project-preview-icon svg {
+    width: 84px;
+    height: 84px;
+    stroke-width: 1.3;
 }
 
 .project-preview-title {

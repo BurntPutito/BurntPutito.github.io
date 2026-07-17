@@ -15,6 +15,7 @@ index.html          Single page. All five sections live here; JS toggles which i
 css/styles.css      All styling. One file.
 js/projects.js      Project data — the single source of truth.
 js/main.js          Rendering, navigation, clock, form.
+js/icons.js         Fluent-style inline-SVG icon registry.
 assets/images/      Images.
 ```
 
@@ -56,6 +57,13 @@ The table rows, the detail panel, and every project count on the site are render
 - **`repo: null` + `repoStatus: 'public'`** renders no button at all.
 - **`demo: null`** renders no demo button.
 - **Empty `tech: []` or `description: ''`** omits that section from the preview rather than rendering an empty heading.
+- **`icon`** is a Fluent icon *name* from `js/icons.js` (e.g. `'game'`, `'phone'`), not an emoji. Add a project with a new kind of icon and you add one entry to that registry.
+
+## Icons
+
+`js/icons.js` is a registry of Fluent-style inline-SVG line icons — no CDN, no icon font, keeping the no-build constraint. Every icon shares one 24×24 grid, a 1.6 stroke, and round caps, and inherits `currentColor`, so the same markup works muted in a nav row or dark on the preview panel's bright gradient.
+
+Static markup references an icon with `data-icon="name"`; `hydrateIcons()` in `main.js` fills those at startup, before `sectionMeta` reads the nav DOM. Rendered markup (rows, tabs, breadcrumb) calls `icon(name)`. Never paste raw emoji back into the UI — add an icon to the registry and reference it by name.
 
 ## Content accuracy rules
 
@@ -76,7 +84,7 @@ The table rows, the detail panel, and every project count on the site are render
 
 ## Design intent
 
-**A Windows 11 File Explorer, colored in gruvbox.** Win11's layout and structure, Mark's own palette and typography — a deliberate stylization, not a copy. Fonts are JetBrains Mono + Syne (kept on purpose rather than switching to Segoe UI).
+**A Windows 11 File Explorer, colored in gruvbox.** Win11's layout and structure, Mark's own palette and typography — a deliberate stylization, not a copy. Fonts are JetBrains Mono + Syne (kept on purpose rather than switching to Segoe UI); icons are Fluent-style line icons (chosen over the original emoji for accuracy).
 
 Gruvbox dark palette. Win11 surface roles map onto the gruvbox ramp: `bg0_h #1d2021` for window/nav, `bg0 #282828` for content, `bg1 #3c3836` for hover, `bg2 #504945` for selection, `--accent-primary #fabd2f` for accents.
 
@@ -116,6 +124,8 @@ When a filter is active the Projects heading becomes the filter's name and the s
 - ✅ **2.2 Nav pane** — chevron groups, Quick access, Projects as an expandable folder, type filters, selection pill. Green migration finished here.
 - ✅ **2.3 Details view** — sortable column headers (click to sort, click again to flip), Win11 hover/selection. Sort lives on the tab; `date` sorts chronologically via a `MMM YYYY` parse, `status` by a liveness rank.
 
-With all three elements in, Pass 2's core is done. Open question still deferred to visual review: emoji icons vs. Fluent line icons (inline SVG — no CDN, keep the no-build constraint). The remaining known issues below (mobile, SEO, real anchors) were always scoped as a later pass.
+- ✅ **2.4 Fluent icons** — the emoji were replaced with an inline-SVG line-icon set (`js/icons.js`). Nav, tabs, breadcrumb, rows, home cards, and social links all draw from it.
+
+Pass 2 is complete. The remaining known issues below (mobile, SEO, real anchors) were always scoped as a later pass.
 
 Blocked on Mark, not on code: Resume section (needs a resume PDF), Blog section (needs posts).
